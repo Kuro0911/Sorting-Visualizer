@@ -4,9 +4,12 @@ const ArrayBarWrapper = styled.div`
   h3 {
     color: white;
   }
-  background-color: black;
-  height: ${(props) => parseInt(props.h)}vh;
-  min-width: 1vw;
-  margin-left: 30%;
+  .array-bar {
+    background-color: ${(props) => (props.act ? "blue" : "black")};
+    height: ${(props) => parseInt(props.h)}vh;
+    width: 15px;
+    display: inline-block;
+    margin: 0 1px;
+  }
 `;
 export default ArrayBarWrapper;

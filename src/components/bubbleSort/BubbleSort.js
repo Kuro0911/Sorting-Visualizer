@@ -8,7 +8,8 @@ const BubbleSort = () => {
     return Math.floor(Math.random() * (max - min)) + min;
   }
   const [heights, setHeights] = useState([]);
-  const [sortedHeights, setSortedHeights] = useState([]);
+  const [length, setLength] = useState(5);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     const temp = [];
@@ -56,12 +57,14 @@ const BubbleSort = () => {
       const test = getRndInteger(1, 100);
       temp.push(test);
     }
+    setLength(event.target.value);
     setHeights(temp);
   };
   const Bubble = (a, n) => {
     for (var i = 0; i < n; i++) {
       let flag = false;
       for (var j = 0; j < n - 1; j++) {
+        setActive(j);
         if (a[j] > a[j + 1]) {
           flag = true;
           let temp = a[j];
@@ -73,18 +76,34 @@ const BubbleSort = () => {
         break;
       }
     }
-    setSortedHeights(a);
+    setHeights(a);
   };
   const doSort = () => {
+    setActive(0);
     Bubble(heights, heights.length);
     console.log(heights);
+  };
+  const handleReset = () => {
+    setActive(0);
+    const temp = [];
+    for (var i = 0; i < length; i++) {
+      const test = getRndInteger(1, 100);
+      temp.push(test);
+    }
+    setHeights(temp);
   };
   return (
     <BubbleSortWrapper>
       <h1>Bubble Sort</h1>
       <Container>
         {heights.map((value, key) => {
-          return <ArrayBar height={value} />;
+          console.log(active);
+          return (
+            <ArrayBar
+              height={value}
+              active={key == active || key == active + 1 ? true : false}
+            />
+          );
         })}
       </Container>
       <SlideWrap>
@@ -101,6 +120,7 @@ const BubbleSort = () => {
         </Box>
       </SlideWrap>
       <button onClick={doSort}>Sort</button>
+      <button onClick={handleReset}>Shuffle</button>
     </BubbleSortWrapper>
   );
 };
