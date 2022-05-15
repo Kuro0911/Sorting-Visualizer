@@ -10,4 +10,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
   max-width: 85%;
 `;
+export const SlideWrap = styled.div`
+  margin-left: 40%;
+`;
 export default BubbleSortWrapper;

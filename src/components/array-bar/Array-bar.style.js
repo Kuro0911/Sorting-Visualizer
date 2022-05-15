@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
 const ArrayBarWrapper = styled.div`
+  h3 {
+    color: white;
+  }
   background-color: black;
-  height: 70vh;
-  max-width: 2vh;
-  margin-left: 100px;
+  height: ${(props) => parseInt(props.h)}vh;
+  min-width: 1vw;
+  margin-left: 30%;
 `;
 export default ArrayBarWrapper;
