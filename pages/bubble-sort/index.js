@@ -1,4 +1,6 @@
+import BubbleSort from "../../src/components/bubbleSort/BubbleSort";
+
 const bubbleSort = () => {
-  return <h1>bubble - sort</h1>;
+  return <BubbleSort />;
 };
 export default bubbleSort;
