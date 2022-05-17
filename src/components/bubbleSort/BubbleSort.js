@@ -6,13 +6,12 @@ import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
 const BubbleSort = () => {
-  const [{ active }, dispatch] = useStateValue();
+  const [{ active, bubbleData }, dispatch] = useStateValue();
   function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(5);
-
   useEffect(() => {
     const temp = [];
     for (var i = 0; i < 5; i++) {
@@ -62,15 +61,31 @@ const BubbleSort = () => {
     setLength(event.target.value);
     setHeights(temp);
   };
-  const Bubble = (a, n) => {
+  const sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  };
+  const Bubble = async (a, n) => {
     for (var i = 0; i < n; i++) {
+      await sleep(250);
       let flag = false;
       for (var j = 0; j < n - 1; j++) {
+        await sleep(700);
         dispatch({
-          type: actionTypes.SET_ACTIVE,
-          active: i,
+          type: actionTypes.SET_BUBBLE_DATA,
+          bubbleData: {
+            ...bubbleData,
+            active: j,
+          },
         });
         if (a[j] > a[j + 1]) {
+          // dispatch({
+          //   type: actionTypes.SET_BUBBLE_DATA,
+          //   bubbleData: {
+          //     ...bubbleData,
+          //     compareA: j,
+          //     compareB: j + 1,
+          //   },
+          // });
           flag = true;
           let temp = a[j];
           a[j] = a[j + 1];
@@ -81,32 +96,31 @@ const BubbleSort = () => {
         break;
       }
     }
-    //setHeights(a);
-  };
-  const sleep = (time) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  };
-
-  const move = async () => {
-    for (let i = 0; i < 5; i++) {
-      await sleep(1000);
-      dispatch({
-        type: actionTypes.SET_ACTIVE,
-        active: i,
-      });
-    }
+    dispatch({
+      type: actionTypes.SET_BUBBLE_DATA,
+      bubbleData: {
+        ...bubbleData,
+        active: heights.length + 1,
+        sorted: true,
+      },
+    });
+    setHeights(a);
   };
 
   const doSort = () => {
-    console.log(active);
-    move();
-    //Bubble(heights, heights.length);
+    Bubble(heights, heights.length);
     console.log(heights);
   };
   const handleReset = () => {
     dispatch({
-      type: actionTypes.SET_ACTIVE,
-      active: 0,
+      type: actionTypes.SET_BUBBLE_DATA,
+      bubbleData: {
+        ...bubbleData,
+        active: 0,
+        compareA: 0,
+        compareB: 1,
+        sorted: false,
+      },
     });
     const temp = [];
     for (var i = 0; i < length; i++) {
@@ -123,7 +137,12 @@ const BubbleSort = () => {
           return (
             <ArrayBar
               height={value}
-              active={key == active || key == active + 1 ? true : false}
+              active={
+                key === bubbleData.active || key === bubbleData.active + 1
+                  ? true
+                  : false
+              }
+              sorted={bubbleData.sorted}
             />
           );
         })}

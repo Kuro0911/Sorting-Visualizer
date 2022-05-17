@@ -5,7 +5,8 @@ const ArrayBarWrapper = styled.div`
     color: white;
   }
   .array-bar {
-    background-color: ${(props) => (props.act ? "blue" : "black")};
+    background-color: ${(props) =>
+      props.act ? "blue" : props.sort ? "green" : "black"};
     height: ${(props) => parseInt(props.h)}vh;
     width: 15px;
     display: inline-block;
