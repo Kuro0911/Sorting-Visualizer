@@ -3,13 +3,15 @@ import ArrayBar from "../array-bar/array-bar";
 import BubbleSortWrapper, { Container, SlideWrap } from "./BubbleSort.style";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { useStateValue } from "../../contexts/StateProvider";
+import { actionTypes } from "../../contexts/reducer";
 const BubbleSort = () => {
+  const [{ active }, dispatch] = useStateValue();
   function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(5);
-  const [active, setActive] = useState(0);
 
   useEffect(() => {
     const temp = [];
@@ -64,7 +66,10 @@ const BubbleSort = () => {
     for (var i = 0; i < n; i++) {
       let flag = false;
       for (var j = 0; j < n - 1; j++) {
-        setActive(j);
+        dispatch({
+          type: actionTypes.SET_ACTIVE,
+          active: i,
+        });
         if (a[j] > a[j + 1]) {
           flag = true;
           let temp = a[j];
@@ -76,15 +81,33 @@ const BubbleSort = () => {
         break;
       }
     }
-    setHeights(a);
+    //setHeights(a);
   };
+  const sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  };
+
+  const move = async () => {
+    for (let i = 0; i < 5; i++) {
+      await sleep(1000);
+      dispatch({
+        type: actionTypes.SET_ACTIVE,
+        active: i,
+      });
+    }
+  };
+
   const doSort = () => {
-    setActive(0);
-    Bubble(heights, heights.length);
+    console.log(active);
+    move();
+    //Bubble(heights, heights.length);
     console.log(heights);
   };
   const handleReset = () => {
-    setActive(0);
+    dispatch({
+      type: actionTypes.SET_ACTIVE,
+      active: 0,
+    });
     const temp = [];
     for (var i = 0; i < length; i++) {
       const test = getRndInteger(1, 100);
@@ -97,7 +120,6 @@ const BubbleSort = () => {
       <h1>Bubble Sort</h1>
       <Container>
         {heights.map((value, key) => {
-          console.log(active);
           return (
             <ArrayBar
               height={value}
