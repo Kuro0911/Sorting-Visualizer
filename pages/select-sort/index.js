@@ -1,4 +1,6 @@
+import SelectSort from "../../src/components/selectSort/SelectSort";
+
 const selectSort = () => {
-  return <h1>select - sort</h1>;
+  return <SelectSort />;
 };
 export default selectSort;

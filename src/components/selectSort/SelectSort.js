@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ArrayBar from "../array-bar/array-bar";
-import BubbleSortWrapper, { Container, SlideWrap } from "./BubbleSort.style";
+import SelectWrapper, { Container, SlideWrap } from "./SelectSort.style";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
-const BubbleSort = () => {
-  const [{ bubbleData }, dispatch] = useStateValue();
+const SelectSort = () => {
+  const [{ selectData }, dispatch] = useStateValue();
   function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
@@ -58,77 +58,68 @@ const BubbleSort = () => {
       const test = getRndInteger(1, 100);
       temp.push(test);
     }
-    dispatch({
-      type: actionTypes.SET_BUBBLE_DATA,
-      bubbleData: {
-        ...bubbleData,
-        active: 0,
-        compareA: 0,
-        compareB: 1,
-        sorted: false,
-      },
-    });
     setLength(event.target.value);
     setHeights(temp);
   };
   const sleep = (time) => {
     return new Promise((resolve) => setTimeout(resolve, time));
   };
-  const Bubble = async (a, n) => {
-    for (var i = 0; i < n; i++) {
+  const select = async (a, n) => {
+    for (var i = 0; i < n - 1; i++) {
       await sleep(250);
-      let flag = false;
-      for (var j = 0; j < n - 1; j++) {
-        await sleep(700);
+      let Imin = i;
+      for (var j = i + 1; j < n; j++) {
         dispatch({
-          type: actionTypes.SET_BUBBLE_DATA,
-          bubbleData: {
-            ...bubbleData,
+          type: actionTypes.SET_SELECT_DATA,
+          selectData: {
+            ...selectData,
             active: j,
           },
         });
-        if (a[j] > a[j + 1]) {
-          // dispatch({
-          //   type: actionTypes.SET_BUBBLE_DATA,
-          //   bubbleData: {
-          //     ...bubbleData,
-          //     compareA: j,
-          //     compareB: j + 1,
-          //   },
-          // });
-          flag = true;
-          let temp = a[j];
-          a[j] = a[j + 1];
-          a[j + 1] = temp;
+        await sleep(700);
+        if (a[Imin] > a[j]) {
+          Imin = j;
+          dispatch({
+            type: actionTypes.SET_SELECT_DATA,
+            selectData: {
+              ...selectData,
+              currMin: Imin,
+            },
+          });
         }
       }
-      if (!flag) {
-        break;
-      }
+      let temp = a[i];
+      a[i] = a[Imin];
+      a[Imin] = temp;
+      dispatch({
+        type: actionTypes.SET_SELECT_DATA,
+        selectData: {
+          ...selectData,
+          currMin: i,
+        },
+      });
     }
     dispatch({
-      type: actionTypes.SET_BUBBLE_DATA,
-      bubbleData: {
-        ...bubbleData,
+      type: actionTypes.SET_SELECT_DATA,
+      selectData: {
+        ...selectData,
         active: heights.length + 1,
+        currMin: heights.length + 1,
         sorted: true,
       },
     });
-    setHeights(a);
   };
-
   const doSort = () => {
-    Bubble(heights, heights.length);
+    select(heights, heights.length);
     console.log(heights);
   };
   const handleReset = () => {
     dispatch({
-      type: actionTypes.SET_BUBBLE_DATA,
-      bubbleData: {
-        ...bubbleData,
+      type: actionTypes.SET_SELECT_DATA,
+      selectData: {
+        ...selectData,
         active: 0,
-        compareA: 0,
-        compareB: 1,
+        currMin: 0,
         sorted: false,
       },
     });
@@ -139,20 +130,18 @@ const BubbleSort = () => {
     }
     setHeights(temp);
   };
+
   return (
-    <BubbleSortWrapper>
-      <h1>Bubble Sort</h1>
+    <SelectWrapper>
+      <h1>Selection Sort</h1>
       <Container>
         {heights.map((value, key) => {
           return (
             <ArrayBar
               height={value}
-              active={
-                key === bubbleData.active || key === bubbleData.active + 1
-                  ? true
-                  : false
-              }
-              sorted={bubbleData.sorted}
+              active={key === selectData.active ? true : false}
+              min={key === selectData.currMin ? true : false}
+              sorted={selectData.sorted}
             />
           );
         })}
@@ -172,8 +161,8 @@ const BubbleSort = () => {
       </SlideWrap>
       <button onClick={doSort}>Sort</button>
       <button onClick={handleReset}>Shuffle</button>
-    </BubbleSortWrapper>
+    </SelectWrapper>
   );
 };
 
-export default BubbleSort;
+export default SelectSort;
