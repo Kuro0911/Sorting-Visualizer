@@ -1,4 +1,6 @@
+import MergeSort from "../../src/components/mergeSort/MergeSort";
+
 const mergeSort = () => {
-  return <h1>merge - sort</h1>;
+  return <MergeSort />;
 };
 export default mergeSort;

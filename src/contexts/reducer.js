@@ -10,11 +10,17 @@ export const initialState = {
     currMin: 0,
     sorted: false,
   },
+  mergeData: {
+    active: 0,
+    heights: {},
+    sorted: false,
+  },
 };
 
 export const actionTypes = {
   SET_BUBBLE_DATA: "SET_BUBBLE_DATA",
   SET_SELECT_DATA: "SET_SELECT_DATA",
+  SET_MERGE_DATA: "SET_MERGE_DATA",
 };
 
 const reducer = (state, action) => {
@@ -29,6 +35,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         selectData: action.selectData,
+      };
+    case actionTypes.SET_MERGE_DATA:
+      return {
+        ...state,
+        mergeData: action.mergeData,
       };
     default:
       return state;
