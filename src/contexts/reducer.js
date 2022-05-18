@@ -15,12 +15,17 @@ export const initialState = {
     heights: {},
     sorted: false,
   },
+  insertData: {
+    hole: 0,
+    active: 1,
+  },
 };
 
 export const actionTypes = {
   SET_BUBBLE_DATA: "SET_BUBBLE_DATA",
   SET_SELECT_DATA: "SET_SELECT_DATA",
   SET_MERGE_DATA: "SET_MERGE_DATA",
+  SET_INSERT_DATA: "SET_INSERT_DATA",
 };
 
 const reducer = (state, action) => {
@@ -40,6 +45,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         mergeData: action.mergeData,
+      };
+    case actionTypes.SET_INSERT_DATA:
+      return {
+        ...state,
+        insertData: action.insertData,
       };
     default:
       return state;

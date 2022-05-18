@@ -1,4 +1,6 @@
+import InsertSort from "../../src/components/insertSort/InsertSort";
+
 const insertSort = () => {
-  return <h1>insert - sort</h1>;
+  return <InsertSort />;
 };
 export default insertSort;
