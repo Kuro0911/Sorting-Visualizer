@@ -1,4 +1,6 @@
+import QuickSort from "../../src/components/quickSort/QuickSort";
+
 const quickSort = () => {
-  return <h1>quick - sort</h1>;
+  return <QuickSort />;
 };
 export default quickSort;

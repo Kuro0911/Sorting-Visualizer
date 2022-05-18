@@ -5,11 +5,9 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
+import { getRndInteger, marks, sleep } from "../../data/Utilfunctions";
 const SelectSort = () => {
   const [{ selectData }, dispatch] = useStateValue();
-  function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(5);
   useEffect(() => {
@@ -20,33 +18,6 @@ const SelectSort = () => {
     }
     setHeights(temp);
   }, []);
-
-  const marks = [
-    {
-      value: 0,
-      label: "0",
-    },
-    {
-      value: 10,
-      label: "10",
-    },
-    {
-      value: 20,
-      label: "20",
-    },
-    {
-      value: 80,
-      label: "80",
-    },
-    {
-      value: 90,
-      label: "90",
-    },
-    {
-      value: 100,
-      label: "100",
-    },
-  ];
 
   function valuetext(value) {
     return `${value}`;
@@ -60,9 +31,6 @@ const SelectSort = () => {
     }
     setLength(event.target.value);
     setHeights(temp);
-  };
-  const sleep = (time) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
   };
   const select = async (a, n) => {
     for (var i = 0; i < n - 1; i++) {

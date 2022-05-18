@@ -19,6 +19,9 @@ export const initialState = {
     hole: 0,
     active: 1,
   },
+  quickData: {
+    active: 0,
+  },
 };
 
 export const actionTypes = {
@@ -26,6 +29,7 @@ export const actionTypes = {
   SET_SELECT_DATA: "SET_SELECT_DATA",
   SET_MERGE_DATA: "SET_MERGE_DATA",
   SET_INSERT_DATA: "SET_INSERT_DATA",
+  SET_QUICK_DATA: "SET_QUICK_DATA",
 };
 
 const reducer = (state, action) => {
@@ -50,6 +54,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         insertData: action.insertData,
+      };
+    case actionTypes.SET_QUICK_DATA:
+      return {
+        ...state,
+        quickData: action.quickData,
       };
     default:
       return state;

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ArrayBar from "../array-bar/array-bar";
-import InsertSortWrapper, { Container, SlideWrap } from "./InsertSort.style";
+import QuickSortWrapper, { Container, SlideWrap } from "./QuickSort.style";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
 import { getRndInteger, marks, sleep } from "../../data/Utilfunctions";
-const InsertSort = () => {
-  const [{ insertData }, dispatch] = useStateValue();
+const QuickSort = () => {
+  const [{ quickData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(5);
   useEffect(() => {
@@ -31,52 +31,33 @@ const InsertSort = () => {
     setLength(event.target.value);
     setHeights(temp);
   };
-  const InsertSort = async (a) => {
-    for (var i = 0; i < a.length; i++) {
-      dispatch({
-        type: actionTypes.SET_INSERT_DATA,
-        insertData: {
-          ...insertData,
-          active: i,
-        },
-      });
-      let hole = i;
-      let val = a[i];
-      await sleep(750);
-      while (hole > 0 && a[hole - 1] > val) {
-        await sleep(500);
-        a[hole] = a[hole - 1];
-        hole = hole - 1;
-        dispatch({
-          type: actionTypes.SET_INSERT_DATA,
-          insertData: {
-            ...insertData,
-            hole: hole - 1,
-          },
-        });
+  const partition =  (a, st, ed) => {
+    let pivot = a[ed];
+    let pIndex = st;
+    for (var i = st; i < ed; i++) {
+      if (a[i] <= pivot) {
+        let temp = a[i];
+        a[i] = a[pIndex];
+        a[pIndex] = temp;
+        pIndex++;
       }
-      a[hole] = val;
-      dispatch({
-        type: actionTypes.SET_INSERT_DATA,
-        insertData: {
-          ...insertData,
-          hole: hole,
-        },
-      });
     }
-    await sleep(1000);
-    setHeights(a);
-    dispatch({
-      type: actionTypes.SET_INSERT_DATA,
-      insertData: {
-        ...insertData,
-        sorted: true,
-      },
-    });
-    console.log(heights);
+    let temp = a[pIndex];
+    a[pIndex] = a[ed];
+    a[ed] = temp;
+    return pIndex;
+  };
+  const QuickSort = async (a, start, end) => {
+    if (start >= end) {
+      console.log(a);
+      return;
+    }
+    let index = partition(a, start, end);
+    QuickSort(a, start, index - 1);
+    QuickSort(a, index + 1, end);
   };
   const doSort = () => {
-    InsertSort(heights);
+    QuickSort(heights, 0, heights.length - 1);
   };
   const handleReset = () => {
     const temp = [];
@@ -86,24 +67,24 @@ const InsertSort = () => {
     }
     setHeights(temp);
     dispatch({
-      type: actionTypes.SET_INSERT_DATA,
-      insertData: {
-        ...insertData,
+      type: actionTypes.SET_Quick_DATA,
+      quickData: {
+        ...quickData,
         sorted: false,
       },
     });
   };
   return (
-    <InsertSortWrapper>
-      <h1>Insert Sort</h1>
+    <QuickSortWrapper>
+      <h1>Quick Sort</h1>
       <Container>
         {heights.map((value, key) => {
           return (
             <ArrayBar
               height={value}
-              active={key === insertData.active ? true : false}
-              sorted={insertData.sorted}
-              hole={key === insertData.hole ? true : false}
+              active={key === quickData.active ? true : false}
+              sorted={quickData.sorted}
+              hole={key === quickData.hole ? true : false}
             />
           );
         })}
@@ -123,8 +104,8 @@ const InsertSort = () => {
       </SlideWrap>
       <button onClick={doSort}>Sort</button>
       <button onClick={handleReset}>Shuffle</button>
-    </InsertSortWrapper>
+    </QuickSortWrapper>
   );
 };
 
-export default InsertSort;
+export default QuickSort;
