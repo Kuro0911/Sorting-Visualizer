@@ -2,20 +2,20 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import ParticlesComponent from "../src/components/particles/Particles";
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
+        {/* <ParticlesComponent /> */}
         <h1 className={styles.title}>
           Welcome to <a>SortViz</a>
         </h1>
-
         <p className={styles.description}>
           Get started by choosing the{" "}
           <code className={styles.code}>Sorting Algorithm</code>
         </p>
-
         <div className={styles.grid}>
           <Link href="/select-sort">
             <a className={styles.card}>

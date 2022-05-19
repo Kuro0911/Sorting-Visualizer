@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ArrayBar from "../array-bar/array-bar";
-import BubbleSortWrapper, { Container, SlideWrap } from "./BubbleSort.style";
+import BubbleSortWrapper from "./BubbleSort.style";
+import { Container, SlideWrap } from "../../../styles/global.style";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";

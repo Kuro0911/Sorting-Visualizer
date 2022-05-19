@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ArrayBar from "../array-bar/array-bar";
-import InsertSortWrapper, { Container, SlideWrap } from "./InsertSort.style";
+import InsertSortWrapper from "./InsertSort.style";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
 import { getRndInteger, marks, sleep } from "../../data/Utilfunctions";
+import { Container, SlideWrap } from "../../../styles/global.style";
 const InsertSort = () => {
   const [{ insertData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);

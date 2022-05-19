@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ArrayBar from "../array-bar/array-bar";
-import QuickSortWrapper, { Container, SlideWrap } from "./QuickSort.style";
+import QuickSortWrapper from "./QuickSort.style";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
 import { getRndInteger, marks, sleep } from "../../data/Utilfunctions";
+import { Container, SlideWrap } from "../../../styles/global.style";
+
 const QuickSort = () => {
   const [{ quickData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);
