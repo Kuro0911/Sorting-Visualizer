@@ -21,6 +21,7 @@ export const initialState = {
   },
   quickData: {
     active: 0,
+    heights: {},
   },
 };
 

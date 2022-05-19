@@ -31,7 +31,7 @@ const QuickSort = () => {
     setLength(event.target.value);
     setHeights(temp);
   };
-  const partition =  (a, st, ed) => {
+  const partition = (a, st, ed) => {
     let pivot = a[ed];
     let pIndex = st;
     for (var i = st; i < ed; i++) {
@@ -49,7 +49,15 @@ const QuickSort = () => {
   };
   const QuickSort = async (a, start, end) => {
     if (start >= end) {
-      console.log(a);
+      setHeights(a);
+      dispatch({
+        type: actionTypes.SET_QUICK_DATA,
+        quickData: {
+          ...quickData,
+          sorted: true,
+          heights: a,
+        },
+      });
       return;
     }
     let index = partition(a, start, end);
@@ -67,7 +75,7 @@ const QuickSort = () => {
     }
     setHeights(temp);
     dispatch({
-      type: actionTypes.SET_Quick_DATA,
+      type: actionTypes.SET_QUICK_DATA,
       quickData: {
         ...quickData,
         sorted: false,
