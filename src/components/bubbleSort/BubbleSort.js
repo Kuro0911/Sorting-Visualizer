@@ -170,6 +170,9 @@ const BubbleSort = ({ button }) => {
           );
         })}
       </Container>
+      <Box sx={{ width: 200 }}>
+        <text>about</text>
+      </Box>
     </BubbleSortWrapper>
   );
 };
