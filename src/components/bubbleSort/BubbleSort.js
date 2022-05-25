@@ -53,10 +53,10 @@ const BubbleSort = ({ button }) => {
   };
   const Bubble = async (a, n) => {
     for (var i = 0; i < n; i++) {
-      await sleep(250);
+      await sleep(valueTime * 10);
       let flag = false;
       for (var j = 0; j < n - 1; j++) {
-        await sleep(700);
+        await sleep(valueTime * 10 + 250);
         dispatch({
           type: actionTypes.SET_BUBBLE_DATA,
           bubbleData: {
@@ -126,11 +126,13 @@ const BubbleSort = ({ button }) => {
               <Slider
                 onChange={handleChange}
                 aria-label="Always visible"
-                defaultValue={5}
+                defaultValue={10}
                 getAriaValueText={valuetext}
                 step={5}
                 marks={marks}
                 valueLabelDisplay="on"
+                min={5}
+                max={100}
               />
             </Box>
           </SlideWrap>
@@ -160,6 +162,7 @@ const BubbleSort = ({ button }) => {
           return (
             <ArrayBar
               height={value}
+              total={heights.length}
               active={
                 key === bubbleData.active || key === bubbleData.active + 1
                   ? true

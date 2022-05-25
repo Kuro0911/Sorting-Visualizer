@@ -14,7 +14,12 @@ const ArrayBarWrapper = styled.div`
         ? "green"
         : "black"};
     height: ${(props) => parseInt(props.h)}vh;
-    width: 15px;
+    width: ${(props) =>
+      parseInt(props.tot) <= 20
+        ? "20"
+        : parseInt(props.tot) >= 45
+        ? "10"
+        : "15"}px;
     display: inline-block;
     margin: 0 1px;
   }
