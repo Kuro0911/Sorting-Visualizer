@@ -25,3 +25,16 @@ export const TopWrap = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const AboutWrapper = styled.div`
+  margin-left: 2em;
+  text-align: left;
+  h1 {
+    color: #00adff;
+  }
+  .textCont {
+    p {
+      font-size: x-large;
+    }
+  }
+`;
