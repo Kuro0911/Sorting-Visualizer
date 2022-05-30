@@ -6,12 +6,22 @@ import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
 import { getRndInteger, marks, sleep } from "../../data/Utilfunctions";
-import { Container, SlideWrap } from "../../../styles/global.style";
-
-const SelectSort = () => {
+import {
+  AboutWrapper,
+  Container,
+  SlideWrap,
+  TopWrap,
+} from "../../../styles/global.style";
+import Button from "../../data/Button";
+import PropTypes from "prop-types";
+import { Stack } from "@mui/material";
+import SpeedIcon from "@mui/icons-material/Speed";
+const SelectSort = ({ button }) => {
   const [{ selectData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(5);
+  const [valueTime, setValueTime] = useState(30);
+
   useEffect(() => {
     const temp = [];
     for (var i = 0; i < 5; i++) {
@@ -24,6 +34,9 @@ const SelectSort = () => {
   function valuetext(value) {
     return `${value}`;
   }
+  const handleChangeTime = (event, newValue) => {
+    setValueTime(newValue);
+  };
   const handleChange = (event) => {
     console.log(event.target.value);
     const temp = [];
@@ -36,7 +49,7 @@ const SelectSort = () => {
   };
   const select = async (a, n) => {
     for (var i = 0; i < n - 1; i++) {
-      await sleep(250);
+      await sleep(valueTime * 10);
       let Imin = i;
       for (var j = i + 1; j < n; j++) {
         dispatch({
@@ -46,7 +59,7 @@ const SelectSort = () => {
             active: j,
           },
         });
-        await sleep(700);
+        await sleep(valueTime * 10 + 250);
         if (a[Imin] > a[j]) {
           Imin = j;
           dispatch({
@@ -102,13 +115,52 @@ const SelectSort = () => {
   };
 
   return (
-    <SelectWrapper>
-      <h1>Selection Sort</h1>
+    <SelectSortWrapper>
+      <TopWrap>
+        <h1>Selection Sort</h1>
+        <div className="container">
+          <SlideWrap>
+            <Box sx={{ width: 300 }}>
+              <Slider
+                onChange={handleChange}
+                aria-label="Always visible"
+                defaultValue={10}
+                getAriaValueText={valuetext}
+                step={5}
+                marks={marks}
+                valueLabelDisplay="on"
+                min={5}
+                max={100}
+              />
+            </Box>
+          </SlideWrap>
+          <SlideWrap>
+            <Box sx={{ width: 200 }}>
+              <Stack
+                spacing={2}
+                direction="row"
+                sx={{ mb: 1 }}
+                alignItems="center"
+              >
+                <SpeedIcon />
+                <Slider
+                  aria-label="Volume"
+                  value={valueTime}
+                  onChange={handleChangeTime}
+                />
+              </Stack>
+            </Box>
+          </SlideWrap>
+          <Button {...button} title="Sort" onClick={doSort} />
+          <Button {...button} title="Shuffle" onClick={handleReset} />
+        </div>
+      </TopWrap>
       <Container>
         {heights.map((value, key) => {
           return (
             <ArrayBar
               height={value}
+              total={heights.length}
               active={key === selectData.active ? true : false}
               min={key === selectData.currMin ? true : false}
               sorted={selectData.sorted}
@@ -116,23 +168,28 @@ const SelectSort = () => {
           );
         })}
       </Container>
-      <SlideWrap>
-        <Box sx={{ width: 300 }}>
-          <Slider
-            onChange={handleChange}
-            aria-label="Always visible"
-            defaultValue={5}
-            getAriaValueText={valuetext}
-            step={5}
-            marks={marks}
-            valueLabelDisplay="on"
-          />
-        </Box>
-      </SlideWrap>
-      <button onClick={doSort}>Sort</button>
-      <button onClick={handleReset}>Shuffle</button>
-    </SelectWrapper>
+      <AboutWrapper>
+        <h1>About</h1>
+      </AboutWrapper>
+    </SelectSortWrapper>
   );
 };
+SelectSort.propTypes = {
+  button: PropTypes.object,
+};
 
+SelectSort.defaultProps = {
+  button: {
+    type: "button",
+    fontSize: "13px",
+    fontWeight: "600",
+    color: "white",
+    borderRadius: "4px",
+    pl: "15px",
+    pr: "15px",
+    colors: "primaryWithBg",
+    minHeight: "auto",
+    height: `${1}`,
+  },
+};
 export default SelectSort;

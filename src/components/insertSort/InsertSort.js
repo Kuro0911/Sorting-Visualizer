@@ -6,11 +6,23 @@ import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
 import { getRndInteger, marks, sleep } from "../../data/Utilfunctions";
-import { Container, SlideWrap } from "../../../styles/global.style";
-const InsertSort = () => {
+import {
+  Container,
+  SlideWrap,
+  TopWrap,
+  AboutWrapper,
+} from "../../../styles/global.style";
+import { Stack } from "@mui/material";
+import SpeedIcon from "@mui/icons-material/Speed";
+import Button from "../../data/Button";
+import PropTypes from "prop-types";
+
+const InsertSort = ({ button }) => {
   const [{ insertData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(5);
+  const [valueTime, setValueTime] = useState(30);
+
   useEffect(() => {
     const temp = [];
     for (var i = 0; i < 5; i++) {
@@ -22,6 +34,9 @@ const InsertSort = () => {
   function valuetext(value) {
     return `${value}`;
   }
+  const handleChangeTime = (event, newValue) => {
+    setValueTime(newValue);
+  };
   const handleChange = (event) => {
     console.log(event.target.value);
     const temp = [];
@@ -43,9 +58,9 @@ const InsertSort = () => {
       });
       let hole = i;
       let val = a[i];
-      await sleep(750);
+      await sleep(valueTime * 10 + 250);
       while (hole > 0 && a[hole - 1] > val) {
-        await sleep(500);
+        await sleep(valueTime * 10);
         a[hole] = a[hole - 1];
         hole = hole - 1;
         dispatch({
@@ -65,7 +80,7 @@ const InsertSort = () => {
         },
       });
     }
-    await sleep(1000);
+    await sleep(valueTime * 10 + 300);
     setHeights(a);
     dispatch({
       type: actionTypes.SET_INSERT_DATA,
@@ -96,12 +111,51 @@ const InsertSort = () => {
   };
   return (
     <InsertSortWrapper>
-      <h1>Insert Sort</h1>
+      <TopWrap>
+        <h1>Insert Sort</h1>
+        <div className="container">
+          <SlideWrap>
+            <Box sx={{ width: 300 }}>
+              <Slider
+                onChange={handleChange}
+                aria-label="Always visible"
+                defaultValue={10}
+                getAriaValueText={valuetext}
+                step={5}
+                marks={marks}
+                valueLabelDisplay="on"
+                min={5}
+                max={100}
+              />
+            </Box>
+          </SlideWrap>
+          <SlideWrap>
+            <Box sx={{ width: 200 }}>
+              <Stack
+                spacing={2}
+                direction="row"
+                sx={{ mb: 1 }}
+                alignItems="center"
+              >
+                <SpeedIcon />
+                <Slider
+                  aria-label="Volume"
+                  value={valueTime}
+                  onChange={handleChangeTime}
+                />
+              </Stack>
+            </Box>
+          </SlideWrap>
+          <Button {...button} title="Sort" onClick={doSort} />
+          <Button {...button} title="Shuffle" onClick={handleReset} />
+        </div>
+      </TopWrap>
       <Container>
         {heights.map((value, key) => {
           return (
             <ArrayBar
               height={value}
+              total={heights.length}
               active={key === insertData.active ? true : false}
               sorted={insertData.sorted}
               hole={key === insertData.hole ? true : false}
@@ -109,23 +163,28 @@ const InsertSort = () => {
           );
         })}
       </Container>
-      <SlideWrap>
-        <Box sx={{ width: 300 }}>
-          <Slider
-            onChange={handleChange}
-            aria-label="Always visible"
-            defaultValue={5}
-            getAriaValueText={valuetext}
-            step={5}
-            marks={marks}
-            valueLabelDisplay="on"
-          />
-        </Box>
-      </SlideWrap>
-      <button onClick={doSort}>Sort</button>
-      <button onClick={handleReset}>Shuffle</button>
+      <AboutWrapper>
+        <h1>About</h1>
+      </AboutWrapper>
     </InsertSortWrapper>
   );
 };
+InsertSort.propTypes = {
+  button: PropTypes.object,
+};
 
+InsertSort.defaultProps = {
+  button: {
+    type: "button",
+    fontSize: "13px",
+    fontWeight: "600",
+    color: "white",
+    borderRadius: "4px",
+    pl: "15px",
+    pr: "15px",
+    colors: "primaryWithBg",
+    minHeight: "auto",
+    height: `${1}`,
+  },
+};
 export default InsertSort;
