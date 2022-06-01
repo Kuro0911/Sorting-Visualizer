@@ -11,8 +11,8 @@ export const initialState = {
     sorted: false,
   },
   mergeData: {
-    active: 0,
-    heights: {},
+    larr: [0],
+    rarr: [0],
     sorted: false,
   },
   insertData: {

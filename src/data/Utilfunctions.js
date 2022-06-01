@@ -32,3 +32,11 @@ export function getRndInteger(min, max) {
 export const sleep = (time) => {
   return new Promise((resolve) => setTimeout(resolve, time));
 };
+export const isSorted = (arr) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i + 1] <= arr[i]) {
+      return false;
+    }
+  }
+  return true;
+};

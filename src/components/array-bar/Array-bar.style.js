@@ -12,6 +12,10 @@ const ArrayBarWrapper = styled.div`
         ? "blue"
         : props.sort
         ? "green"
+        : props.lrr
+        ? "pink"
+        : props.rrr
+        ? "red"
         : "black"};
     height: ${(props) => parseInt(props.h)}vh;
     width: ${(props) =>

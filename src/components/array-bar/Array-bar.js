@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ArrayBarWrapper from "./Array-bar.style";
 
 export const ArrayBar = ({
@@ -10,6 +10,8 @@ export const ArrayBar = ({
   sorted,
   min,
   hole,
+  larr,
+  rarr,
 }) => {
   return (
     <div>
@@ -21,6 +23,8 @@ export const ArrayBar = ({
         mn={min}
         hl={hole}
         tot={total}
+        lrr={larr}
+        rrr={rarr}
       >
         <div className="array-bar"></div>
       </ArrayBarWrapper>

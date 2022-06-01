@@ -5,7 +5,12 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
-import { getRndInteger, marks, sleep } from "../../data/Utilfunctions";
+import {
+  getRndInteger,
+  isSorted,
+  marks,
+  sleep,
+} from "../../data/Utilfunctions";
 import { Container, SlideWrap } from "../../../styles/global.style";
 
 const MergeSort = () => {
@@ -33,42 +38,15 @@ const MergeSort = () => {
     setLength(event.target.value);
     setHeights(temp);
   };
-  const merge = async (a, low, mid, high) => {
-    console.log(low, mid, high);
-    let temp = new Array();
-    let i, k, j;
-    i = k = low;
-    j = mid + 1;
-    while (i <= mid && j <= high) {
-      if (a[i] < a[j]) {
-        temp[k] = a[i];
-        k++;
-        i++;
-      } else {
-        temp[k] = a[j];
-        k++;
-        j++;
-      }
-    }
-    while (i <= mid) {
-      temp[k] = a[i];
-      i++;
-      k++;
-    }
-    while (j <= high) {
-      temp[k] = a[j];
-      j++;
-      k++;
-    }
-    for (var x = low; x <= high; x++) {
-      a[x] = temp[x];
-    }
-  };
-  const mergeSort = (array) => {
+  const mergeSort = async (array) => {
     if (array.length === 1) return array;
     const mid = Math.floor(array.length / 2);
-    const firstH = mergeSort(array.slice(0, mid));
-    const secondH = mergeSort(array.slice(mid));
+    const firstH = await mergeSort(array.slice(0, mid)).then((res) => {
+      return res;
+    });
+    const secondH = await mergeSort(array.slice(mid)).then((res) => {
+      return res;
+    });
     const sortedArr = [];
     let i = 0,
       j = 0;
@@ -79,12 +57,31 @@ const MergeSort = () => {
         sortedArr.push(secondH[j++]);
       }
     }
+    dispatch({
+      type: actionTypes.SET_MERGE_DATA,
+      mergeData: {
+        ...mergeData,
+        larr: firstH,
+        rarr: secondH,
+      },
+    });
     while (i < firstH.length) sortedArr.push(firstH[i++]);
     while (j < secondH.length) sortedArr.push(secondH[j++]);
+    await sleep(1000);
     return sortedArr;
   };
   const doSort = () => {
-    setHeights(mergeSort(heights));
+    mergeSort(heights).then((res) => {
+      // console.log(isSorted(res));
+      setHeights(res);
+      dispatch({
+        type: actionTypes.SET_MERGE_DATA,
+        mergeData: {
+          ...mergeData,
+          sorted: isSorted(res),
+        },
+      });
+    });
   };
   const handleReset = () => {
     const temp = [];
@@ -98,7 +95,8 @@ const MergeSort = () => {
       mergeData: {
         ...mergeData,
         sorted: false,
-        heights: temp,
+        larr: [0],
+        rarr: [0],
       },
     });
   };
@@ -110,7 +108,8 @@ const MergeSort = () => {
           return (
             <ArrayBar
               height={value}
-              active={key === mergeData.active ? true : false}
+              larr={mergeData.larr.includes(value) ? true : false}
+              rarr={mergeData.rarr.includes(value) ? true : false}
               sorted={mergeData.sorted}
             />
           );
