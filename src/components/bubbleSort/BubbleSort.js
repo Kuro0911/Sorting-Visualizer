@@ -24,7 +24,7 @@ const BubbleSort = ({ button }) => {
   const [valueTime, setValueTime] = useState(30);
   useEffect(() => {
     const temp = [];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 10; i++) {
       const test = getRndInteger(1, 100);
       temp.push(test);
     }
