@@ -9,7 +9,7 @@ export const marks = [
   },
   {
     value: 30,
-    label: "20",
+    label: "30",
   },
   {
     value: 80,

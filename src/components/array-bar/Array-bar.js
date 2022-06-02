@@ -12,6 +12,7 @@ export const ArrayBar = ({
   hole,
   larr,
   rarr,
+  largest,
 }) => {
   return (
     <div>
@@ -25,6 +26,7 @@ export const ArrayBar = ({
         tot={total}
         lrr={larr}
         rrr={rarr}
+        large={largest}
       >
         <div className="array-bar"></div>
       </ArrayBarWrapper>

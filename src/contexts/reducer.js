@@ -23,6 +23,10 @@ export const initialState = {
     active: 0,
     heights: {},
   },
+  heapData: {
+    active: 0,
+    heights: {},
+  },
 };
 
 export const actionTypes = {
@@ -31,6 +35,7 @@ export const actionTypes = {
   SET_MERGE_DATA: "SET_MERGE_DATA",
   SET_INSERT_DATA: "SET_INSERT_DATA",
   SET_QUICK_DATA: "SET_QUICK_DATA",
+  SET_HEAP_DATA: "SET_HEAP_DATA",
 };
 
 const reducer = (state, action) => {
@@ -60,6 +65,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         quickData: action.quickData,
+      };
+    case actionTypes.SET_HEAP_DATA:
+      return {
+        ...state,
+        heapData: action.heapData,
       };
     default:
       return state;
