@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from "react";
 import ArrayBar from "../array-bar/array-bar";
 import QuickSortWrapper from "./QuickSort.style";
+import {
+  AboutWrapper,
+  Container,
+  SlideWrap,
+  TopWrap,
+} from "../../../styles/global.style";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
-import { getRndInteger, marks, sleep } from "../../data/Utilfunctions";
-import { Container, SlideWrap } from "../../../styles/global.style";
+import {
+  getRndInteger,
+  isSorted,
+  marks,
+  sleep,
+} from "../../data/Utilfunctions";
+import Button from "../../data/Button";
+import PropTypes from "prop-types";
+import { Stack } from "@mui/material";
+import SpeedIcon from "@mui/icons-material/Speed";
 
-const QuickSort = () => {
+const QuickSort = ({ button }) => {
   const [{ quickData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);
-  const [length, setLength] = useState(5);
+  const [length, setLength] = useState(10);
+  const [valueTime, setValueTime] = useState(30);
   useEffect(() => {
     const temp = [];
     for (var i = 0; i < 10; i++) {
@@ -23,6 +38,9 @@ const QuickSort = () => {
   function valuetext(value) {
     return `${value}`;
   }
+  const handleChangeTime = (event, newValue) => {
+    setValueTime(newValue);
+  };
   const handleChange = (event) => {
     console.log(event.target.value);
     const temp = [];
@@ -33,10 +51,19 @@ const QuickSort = () => {
     setLength(event.target.value);
     setHeights(temp);
   };
-  const partition = (a, st, ed) => {
+  const partition = async (a, st, ed) => {
     let pivot = a[ed];
     let pIndex = st;
     for (var i = st; i < ed; i++) {
+      await sleep(valueTime * 30);
+      dispatch({
+        type: actionTypes.SET_QUICK_DATA,
+        quickData: {
+          ...quickData,
+          active: ed,
+          hole: i,
+        },
+      });
       if (a[i] <= pivot) {
         let temp = a[i];
         a[i] = a[pIndex];
@@ -47,24 +74,36 @@ const QuickSort = () => {
     let temp = a[pIndex];
     a[pIndex] = a[ed];
     a[ed] = temp;
+    dispatch({
+      type: actionTypes.SET_QUICK_DATA,
+      quickData: {
+        ...quickData,
+        active: pIndex,
+      },
+    });
     return pIndex;
   };
   const QuickSort = async (a, start, end) => {
+    setHeights(a);
+    console.log(heights);
+    console.log(isSorted(heights));
     if (start >= end) {
-      setHeights(a);
       dispatch({
         type: actionTypes.SET_QUICK_DATA,
         quickData: {
           ...quickData,
           sorted: true,
-          heights: a,
         },
       });
       return;
     }
-    let index = partition(a, start, end);
-    QuickSort(a, start, index - 1);
-    QuickSort(a, index + 1, end);
+    let index = await partition(a, start, end).then((res) => {
+      return res;
+    });
+    await sleep(valueTime * 20);
+    await QuickSort(a, start, index - 1);
+    await sleep(valueTime * 20);
+    await QuickSort(a, index + 1, end);
   };
   const doSort = () => {
     QuickSort(heights, 0, heights.length - 1);
@@ -80,18 +119,58 @@ const QuickSort = () => {
       type: actionTypes.SET_QUICK_DATA,
       quickData: {
         ...quickData,
+        active: 0,
         sorted: false,
       },
     });
   };
   return (
     <QuickSortWrapper>
-      <h1>Quick Sort</h1>
+      <TopWrap>
+        <h1>Quick Sort</h1>
+        <div className="container">
+          <SlideWrap>
+            <Box sx={{ width: 300 }}>
+              <Slider
+                onChange={handleChange}
+                aria-label="Always visible"
+                defaultValue={10}
+                getAriaValueText={valuetext}
+                step={5}
+                marks={marks}
+                valueLabelDisplay="on"
+                min={5}
+                max={100}
+              />
+            </Box>
+          </SlideWrap>
+          <SlideWrap>
+            <Box sx={{ width: 200 }}>
+              <Stack
+                spacing={2}
+                direction="row"
+                sx={{ mb: 1 }}
+                alignItems="center"
+              >
+                <SpeedIcon />
+                <Slider
+                  aria-label="Volume"
+                  value={valueTime}
+                  onChange={handleChangeTime}
+                />
+              </Stack>
+            </Box>
+          </SlideWrap>
+          <Button {...button} title="Sort" onClick={doSort} />
+          <Button {...button} title="Shuffle" onClick={handleReset} />
+        </div>
+      </TopWrap>
       <Container>
         {heights.map((value, key) => {
           return (
             <ArrayBar
               height={value}
+              total={heights.length}
               active={key === quickData.active ? true : false}
               sorted={quickData.sorted}
               hole={key === quickData.hole ? true : false}
@@ -99,23 +178,26 @@ const QuickSort = () => {
           );
         })}
       </Container>
-      <SlideWrap>
-        <Box sx={{ width: 300 }}>
-          <Slider
-            onChange={handleChange}
-            aria-label="Always visible"
-            defaultValue={5}
-            getAriaValueText={valuetext}
-            step={5}
-            marks={marks}
-            valueLabelDisplay="on"
-          />
-        </Box>
-      </SlideWrap>
-      <button onClick={doSort}>Sort</button>
-      <button onClick={handleReset}>Shuffle</button>
     </QuickSortWrapper>
   );
+};
+QuickSort.propTypes = {
+  button: PropTypes.object,
+};
+
+QuickSort.defaultProps = {
+  button: {
+    type: "button",
+    fontSize: "13px",
+    fontWeight: "600",
+    color: "white",
+    borderRadius: "4px",
+    pl: "15px",
+    pr: "15px",
+    colors: "primaryWithBg",
+    minHeight: "auto",
+    height: `${1}`,
+  },
 };
 
 export default QuickSort;
