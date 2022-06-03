@@ -49,7 +49,7 @@ const SelectSort = ({ button }) => {
   };
   const select = async (a, n) => {
     for (var i = 0; i < n - 1; i++) {
-      await sleep(valueTime * 10);
+      await sleep(valueTime * 7);
       let Imin = i;
       for (var j = i + 1; j < n; j++) {
         dispatch({
@@ -59,7 +59,7 @@ const SelectSort = ({ button }) => {
             active: j,
           },
         });
-        await sleep(valueTime * 10 + 250);
+        await sleep(valueTime * 10);
         if (a[Imin] > a[j]) {
           Imin = j;
           dispatch({

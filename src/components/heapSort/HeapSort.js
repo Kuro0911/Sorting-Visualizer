@@ -55,7 +55,6 @@ const HeapSort = ({ button }) => {
     var largest = i;
     var l = 2 * i + 1;
     var r = 2 * i + 2;
-    await sleep(250);
     if (l < n && arr[l] > arr[largest]) {
       largest = l;
       dispatch({
@@ -66,7 +65,6 @@ const HeapSort = ({ button }) => {
         },
       });
     }
-    await sleep(250);
     if (r < n && arr[r] > arr[largest]) {
       largest = r;
       dispatch({
@@ -88,6 +86,7 @@ const HeapSort = ({ button }) => {
           largest: largest,
         },
       });
+      setHeights(arr);
       heapify(arr, n, largest);
     }
   };
@@ -95,7 +94,7 @@ const HeapSort = ({ button }) => {
     var n = length;
     for (var i = Math.floor(n / 2) - 1; i >= 0; i--) heapify(arr, n, i);
     for (var i = n - 1; i > 0; i--) {
-      await sleep(300);
+      await sleep(valueTime * 10);
       var temp = arr[0];
       arr[0] = arr[i];
       arr[i] = temp;
@@ -105,11 +104,10 @@ const HeapSort = ({ button }) => {
       type: actionTypes.SET_HEAP_DATA,
       heapData: {
         ...heapData,
-        heights: arr,
+        heights: heights,
         sorted: true,
       },
     });
-    setHeights(arr);
   };
   const doSort = () => {
     heapSort(heights);
@@ -126,6 +124,7 @@ const HeapSort = ({ button }) => {
       heapData: {
         ...heapData,
         active: 0,
+        largest: 0,
         sorted: false,
       },
     });
