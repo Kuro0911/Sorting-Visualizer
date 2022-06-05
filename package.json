@@ -1,8 +1,11 @@
 {
+  "homepage": "https://kuro0911.github.io/Sorting-Visualizer",
   "name": "sort-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predeploy": "yarn run build",
+  "deploy": "gh-pages -b master -d build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -14,6 +17,7 @@
     "@mui/icons-material": "^5.8.0",
     "@mui/material": "^5.7.0",
     "@styled-system/theme-get": "^5.1.2",
+    "gh-pages": "^4.0.0",
     "next": "12.1.6",
     "react": "^18.1.0",
     "react-dom": "18.1.0",
