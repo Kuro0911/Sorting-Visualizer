@@ -21,6 +21,7 @@ import Button from "../../data/Button";
 import PropTypes from "prop-types";
 import { Stack } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
+import TimeComp from "../time-comp/TimeComp";
 const MergeSort = ({ button }) => {
   const [{ mergeData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);
@@ -218,6 +219,11 @@ const MergeSort = ({ button }) => {
           </p>
         </div>
       </AboutWrapper>
+      <TimeComp
+        worst={"Ω(n log(n))"}
+        avg={"θ(n log(n))"}
+        best={"Ω(n log(n))"}
+      />
     </MergeSortWrapper>
   );
 };

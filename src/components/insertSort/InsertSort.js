@@ -16,6 +16,7 @@ import { Stack } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
 import Button from "../../data/Button";
 import PropTypes from "prop-types";
+import TimeComp from "../time-comp/TimeComp";
 
 const InsertSort = ({ button }) => {
   const [{ insertData }, dispatch] = useStateValue();
@@ -206,6 +207,7 @@ const InsertSort = ({ button }) => {
           </p>
         </div>
       </AboutWrapper>
+      <TimeComp worst={"O(n^2)"} avg={"θ(n^2)"} best={"Ω(n)"} />
     </InsertSortWrapper>
   );
 };

@@ -21,6 +21,7 @@ import Button from "../../data/Button";
 import PropTypes from "prop-types";
 import { Stack } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
+import TimeComp from "../time-comp/TimeComp";
 
 const QuickSort = ({ button }) => {
   const [{ quickData }, dispatch] = useStateValue();
@@ -200,6 +201,7 @@ const QuickSort = ({ button }) => {
           </p>
         </div>
       </AboutWrapper>
+      <TimeComp worst={"O(n^2)"} avg={"θ(n log(n))"} best={"Ω(n log(n))"} />
     </QuickSortWrapper>
   );
 };

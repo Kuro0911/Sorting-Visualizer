@@ -16,6 +16,7 @@ import Button from "../../data/Button";
 import PropTypes from "prop-types";
 import { Stack } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
+import TimeComp from "../time-comp/TimeComp";
 const SelectSort = ({ button }) => {
   const [{ selectData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);
@@ -200,6 +201,7 @@ const SelectSort = ({ button }) => {
           </p>
         </div>
       </AboutWrapper>
+      <TimeComp worst={"O(N^2)"} avg={"O(N^2)"} best={"O(N^2)"} />
     </SelectSortWrapper>
   );
 };

@@ -16,6 +16,7 @@ import Button from "../../data/Button";
 import PropTypes from "prop-types";
 import { Stack } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
+import TimeComp from "../time-comp/TimeComp";
 
 const BubbleSort = ({ button }) => {
   const [{ bubbleData }, dispatch] = useStateValue();
@@ -232,6 +233,7 @@ const BubbleSort = ({ button }) => {
           </p>
         </div>
       </AboutWrapper>
+      <TimeComp worst={"Ω(n^2)"} avg={"Ω(n^2)"} best={"Ω(n)"} />
     </BubbleSortWrapper>
   );
 };
