@@ -183,6 +183,38 @@ const HeapSort = ({ button }) => {
           );
         })}
       </Container>
+      <AboutWrapper>
+        <h1>About</h1>
+        <div className={"textCont"}>
+          <p>
+            Heap sort is a comparison-based sorting technique based on Binary
+            Heap data structure. It is similar to selection sort where we first
+            find the minimum element and place the minimum element at the
+            beginning. We repeat the same process for the remaining elements.
+          </p>
+          <p>
+            <b>Advantages of heapsort -</b>
+            <ul>
+              <li>
+                <b>Efficiency</b> - The time required to perform Heap sort
+                increases logarithmically while other algorithms may grow
+                exponentially slower as the number of items to sort increases.
+                This sorting algorithm is very efficient.
+              </li>
+              <li>
+                <b>Memory Usage</b> - Memory usage is minimal because apart from
+                what is necessary to hold the initial list of items to be
+                sorted, it needs no additional memory space to work
+              </li>
+              <li>
+                <b>Simplicity</b> - It is simpler to understand than other
+                equally efficient sorting algorithms because it does not use
+                advanced computer science concepts such as recursion
+              </li>
+            </ul>
+          </p>
+        </div>
+      </AboutWrapper>
     </HeapSortWrapper>
   );
 };

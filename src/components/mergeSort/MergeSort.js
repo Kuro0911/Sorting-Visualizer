@@ -80,6 +80,7 @@ const MergeSort = ({ button }) => {
     while (i < firstH.length) sortedArr.push(firstH[i++]);
     while (j < secondH.length) sortedArr.push(secondH[j++]);
     await sleep(valueTime * 40);
+
     return sortedArr;
   };
   const doSort = () => {
@@ -90,7 +91,7 @@ const MergeSort = ({ button }) => {
         type: actionTypes.SET_MERGE_DATA,
         mergeData: {
           ...mergeData,
-          sorted: isSorted(res),
+          sorted: true,
         },
       });
     });
@@ -168,6 +169,54 @@ const MergeSort = ({ button }) => {
       </Container>
       <AboutWrapper>
         <h1>About</h1>
+        <div className={"textCont"}>
+          <p>
+            Like QuickSort, <b>Merge Sort</b> is a Divide and Conquer algorithm.
+            It divides the input array into two halves, calls itself for the two
+            halves, and then it merges the two sorted halves. The merge()
+            function is used for merging two halves. The merge(arr, l, m, r) is
+            a key process that assumes that arr[l..m] and arr[m+1..r] are sorted
+            and merges the two sorted sub-arrays into one.
+          </p>
+          <p>
+            <b>Pseudocode :</b>
+            <ul>
+              <li>Declare left variable to 0 and right variable to n-1</li>
+              <li>Find mid by medium formula. mid = (left+right)/2</li>
+              <li>Call merge sort on (left,mid)</li>
+              <li>Call merge sort on (mid+1,rear)</li>
+              <li>Continue till left is less than right</li>
+              <li>Then call merge function to perform merge sort.</li>
+            </ul>
+          </p>
+          <p>
+            <b>Algorithm :</b>
+            <ul>
+              <li>step 1: start</li>
+              <li>step 2: declare array and left, right, mid variable </li>
+              <li>
+                step 3: perform merge function.
+                <br />
+                mergesort(array,left,right)
+                <br />
+                mergesort (array, left, right)
+                <br />
+                if left > right
+                <br />
+                return
+                <br />
+                mid= (left+right)/2
+                <br />
+                mergesort(array, left, mid)
+                <br />
+                mergesort(array, mid+1, right)
+                <br />
+                merge(array, left, mid, right)
+              </li>
+              <li>step 4: Stop</li>
+            </ul>
+          </p>
+        </div>
       </AboutWrapper>
     </MergeSortWrapper>
   );

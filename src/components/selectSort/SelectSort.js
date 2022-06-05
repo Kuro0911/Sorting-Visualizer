@@ -19,7 +19,7 @@ import SpeedIcon from "@mui/icons-material/Speed";
 const SelectSort = ({ button }) => {
   const [{ selectData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);
-  const [length, setLength] = useState(5);
+  const [length, setLength] = useState(10);
   const [valueTime, setValueTime] = useState(30);
 
   useEffect(() => {
@@ -170,6 +170,35 @@ const SelectSort = ({ button }) => {
       </Container>
       <AboutWrapper>
         <h1>About</h1>
+        <div className={"textCont"}>
+          <p>
+            The <b>selection sort</b> algorithm sorts an array by repeatedly
+            finding the minimum element (considering ascending order) from
+            unsorted part and putting it at the beginning. The algorithm
+            maintains two subarrays in a given array. The subarray which is
+            already sorted. Remaining subarray which is unsorted. In every
+            iteration of selection sort, the minimum element (considering
+            ascending order) from the unsorted subarray is picked and moved to
+            the sorted subarray.
+          </p>
+          <p>
+            Approach:
+            <ul>
+              <li>Initialize minimum value(min_idx) to location 0</li>
+              <li>
+                Traverse the array to find the minimum element in the array
+              </li>
+              <li>
+                While traversing if any element smaller than min_idx is found
+                then swap both the values.
+              </li>
+              <li>
+                Then, increment min_idx to point to next element Repeat until
+                array is sorted
+              </li>
+            </ul>
+          </p>
+        </div>
       </AboutWrapper>
     </SelectSortWrapper>
   );
