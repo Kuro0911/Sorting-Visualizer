@@ -9,10 +9,17 @@ export default function Home() {
       <main className={styles.main}>
         {/* <ParticlesComponent /> */}
         <h1 className={styles.title}>
-          Welcome to <a>SortViz</a>
+          Welcome to{" "}
+          <a
+            onClick={() => {
+              window.open("https://github.com/Kuro0911/Sorting-Visualizer");
+            }}
+          >
+            SortViz
+          </a>
         </h1>
         <p className={styles.description}>
-          Get started by choosing the{" "}
+          Get started by choosing a{" "}
           <code className={styles.code}>Sorting Algorithm</code>
         </p>
         <div className={styles.grid}>
