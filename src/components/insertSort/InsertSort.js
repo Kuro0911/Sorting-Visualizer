@@ -17,6 +17,7 @@ import SpeedIcon from "@mui/icons-material/Speed";
 import Button from "../../data/Button";
 import PropTypes from "prop-types";
 import TimeComp from "../time-comp/TimeComp";
+import { HomeBtn } from "../home/HomeBtn";
 
 const InsertSort = ({ button }) => {
   const [{ insertData }, dispatch] = useStateValue();
@@ -115,7 +116,10 @@ const InsertSort = ({ button }) => {
   return (
     <InsertSortWrapper>
       <TopWrap>
-        <h1>Insert Sort</h1>
+        <div className="wrap">
+          <HomeBtn />
+          <h1>Insert Sort</h1>
+        </div>
         <div className="container">
           <SlideWrap>
             <Box sx={{ width: 300 }}>

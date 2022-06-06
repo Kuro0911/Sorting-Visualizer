@@ -22,6 +22,7 @@ import PropTypes from "prop-types";
 import { Stack } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
 import TimeComp from "../time-comp/TimeComp";
+import { HomeBtn } from "../home/HomeBtn";
 
 const HeapSort = ({ button }) => {
   const [{ heapData }, dispatch] = useStateValue();
@@ -133,7 +134,10 @@ const HeapSort = ({ button }) => {
   return (
     <HeapSortWrapper>
       <TopWrap>
-        <h1>Heap Sort</h1>
+        <div className="wrap">
+          <HomeBtn />
+          <h1>Heap Sort</h1>
+        </div>
         <div className="container">
           <SlideWrap>
             <Box sx={{ width: 300 }}>

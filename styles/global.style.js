@@ -21,6 +21,9 @@ export const TopWrap = styled.div`
     display: flex;
     margin-right: 1em;
   }
+  .wrap {
+    display: flex;
+  }
   background-color: white;
   display: flex;
   justify-content: space-between;

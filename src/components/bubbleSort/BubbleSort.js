@@ -17,6 +17,7 @@ import PropTypes from "prop-types";
 import { Stack } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
 import TimeComp from "../time-comp/TimeComp";
+import { HomeBtn } from "../home/HomeBtn";
 
 const BubbleSort = ({ button }) => {
   const [{ bubbleData }, dispatch] = useStateValue();
@@ -125,7 +126,10 @@ const BubbleSort = ({ button }) => {
   return (
     <BubbleSortWrapper>
       <TopWrap>
-        <h1>Bubble Sort</h1>
+        <div className="wrap">
+          <HomeBtn />
+          <h1>Bubble Sort</h1>
+        </div>
         <div className="container">
           <SlideWrap>
             <Box sx={{ width: 300 }}>

@@ -22,6 +22,7 @@ import PropTypes from "prop-types";
 import { Stack } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
 import TimeComp from "../time-comp/TimeComp";
+import { HomeBtn } from "../home/HomeBtn";
 const MergeSort = ({ button }) => {
   const [{ mergeData }, dispatch] = useStateValue();
   const [heights, setHeights] = useState([]);
@@ -117,7 +118,10 @@ const MergeSort = ({ button }) => {
   return (
     <MergeSortWrapper>
       <TopWrap>
-        <h1>Merge Sort</h1>
+        <div className="wrap">
+          <HomeBtn />
+          <h1>Merge Sort</h1>
+        </div>
         <div className="container">
           <SlideWrap>
             <Box sx={{ width: 300 }}>
