@@ -29,6 +29,7 @@ const HeapSort = ({ button }) => {
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(10);
   const [valueTime, setValueTime] = useState(30);
+  const [disable, setDisable] = useState(false);
   useEffect(() => {
     const temp = [];
     for (var i = 0; i < 10; i++) {
@@ -102,6 +103,7 @@ const HeapSort = ({ button }) => {
       arr[i] = temp;
       heapify(arr, i, 0);
     }
+    setDisable(false);
     dispatch({
       type: actionTypes.SET_HEAP_DATA,
       heapData: {
@@ -112,6 +114,7 @@ const HeapSort = ({ button }) => {
     });
   };
   const doSort = () => {
+    setDisable(true);
     heapSort(heights);
   };
   const handleReset = () => {
@@ -151,6 +154,7 @@ const HeapSort = ({ button }) => {
                 valueLabelDisplay="on"
                 min={5}
                 max={100}
+                disabled={disable}
               />
             </Box>
           </SlideWrap>
@@ -167,12 +171,23 @@ const HeapSort = ({ button }) => {
                   aria-label="Volume"
                   value={valueTime}
                   onChange={handleChangeTime}
+                  disabled={disable}
                 />
               </Stack>
             </Box>
           </SlideWrap>
-          <Button {...button} title="Sort" onClick={doSort} />
-          <Button {...button} title="Shuffle" onClick={handleReset} />
+          <Button
+            {...button}
+            title="Sort"
+            onClick={doSort}
+            disabled={disable}
+          />
+          <Button
+            {...button}
+            title="Shuffle"
+            onClick={handleReset}
+            disabled={disable}
+          />
         </div>
       </TopWrap>
       <Container>

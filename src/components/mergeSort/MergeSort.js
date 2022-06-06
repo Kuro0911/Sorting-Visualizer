@@ -28,6 +28,8 @@ const MergeSort = ({ button }) => {
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(10);
   const [valueTime, setValueTime] = useState(30);
+  const [disable, setDisable] = useState(false);
+
   useEffect(() => {
     const temp = [];
     for (var i = 0; i < 10; i++) {
@@ -86,9 +88,11 @@ const MergeSort = ({ button }) => {
     return sortedArr;
   };
   const doSort = () => {
+    setDisable(true);
     mergeSort(heights).then((res) => {
       // console.log(isSorted(res));
       setHeights(res);
+      setDisable(false);
       dispatch({
         type: actionTypes.SET_MERGE_DATA,
         mergeData: {
@@ -135,6 +139,7 @@ const MergeSort = ({ button }) => {
                 valueLabelDisplay="on"
                 min={5}
                 max={100}
+                disabled={disable}
               />
             </Box>
           </SlideWrap>
@@ -151,12 +156,23 @@ const MergeSort = ({ button }) => {
                   aria-label="Volume"
                   value={valueTime}
                   onChange={handleChangeTime}
+                  disabled={disable}
                 />
               </Stack>
             </Box>
           </SlideWrap>
-          <Button {...button} title="Sort" onClick={doSort} />
-          <Button {...button} title="Shuffle" onClick={handleReset} />
+          <Button
+            {...button}
+            title="Sort"
+            onClick={doSort}
+            disabled={disable}
+          />
+          <Button
+            {...button}
+            title="Shuffle"
+            onClick={handleReset}
+            disabled={disable}
+          />
         </div>
       </TopWrap>
       <Container>

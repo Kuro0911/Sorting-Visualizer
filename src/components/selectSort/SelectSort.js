@@ -23,6 +23,7 @@ const SelectSort = ({ button }) => {
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(10);
   const [valueTime, setValueTime] = useState(30);
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     const temp = [];
@@ -93,10 +94,11 @@ const SelectSort = ({ button }) => {
         sorted: true,
       },
     });
+    setDisable(false);
   };
   const doSort = () => {
+    setDisable(true);
     select(heights, heights.length);
-    console.log(heights);
   };
   const handleReset = () => {
     dispatch({
@@ -136,6 +138,7 @@ const SelectSort = ({ button }) => {
                 valueLabelDisplay="on"
                 min={5}
                 max={100}
+                disabled={disable}
               />
             </Box>
           </SlideWrap>
@@ -152,12 +155,23 @@ const SelectSort = ({ button }) => {
                   aria-label="Volume"
                   value={valueTime}
                   onChange={handleChangeTime}
+                  disabled={disable}
                 />
               </Stack>
             </Box>
           </SlideWrap>
-          <Button {...button} title="Sort" onClick={doSort} />
-          <Button {...button} title="Shuffle" onClick={handleReset} />
+          <Button
+            {...button}
+            title="Sort"
+            onClick={doSort}
+            disabled={disable}
+          />
+          <Button
+            {...button}
+            title="Shuffle"
+            onClick={handleReset}
+            disabled={disable}
+          />
         </div>
       </TopWrap>
       <Container>

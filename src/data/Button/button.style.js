@@ -7,7 +7,7 @@ import { base } from "../base";
 const ButtonStyle = styled.button`
   margin-left: 1em;
   margin-top: 2em;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "wait" : "pointer")};
   display: inline-flex;
   align-items: center;
   justify-content: center;

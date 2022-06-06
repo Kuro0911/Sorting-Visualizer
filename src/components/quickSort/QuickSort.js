@@ -29,6 +29,7 @@ const QuickSort = ({ button }) => {
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(10);
   const [valueTime, setValueTime] = useState(30);
+  const [disable, setDisable] = useState(false);
   useEffect(() => {
     const temp = [];
     for (var i = 0; i < 10; i++) {
@@ -86,10 +87,10 @@ const QuickSort = ({ button }) => {
     return pIndex;
   };
   const QuickSort = async (a, start, end) => {
+    setDisable(true);
     setHeights(a);
-    console.log(heights);
-    console.log(isSorted(heights));
     if (start >= end) {
+      setDisable(false);
       dispatch({
         type: actionTypes.SET_QUICK_DATA,
         quickData: {
@@ -108,6 +109,7 @@ const QuickSort = ({ button }) => {
     await QuickSort(a, index + 1, end);
   };
   const doSort = () => {
+    setDisable(true);
     QuickSort(heights, 0, heights.length - 1);
   };
   const handleReset = () => {
@@ -146,6 +148,7 @@ const QuickSort = ({ button }) => {
                 valueLabelDisplay="on"
                 min={5}
                 max={100}
+                disabled={disable}
               />
             </Box>
           </SlideWrap>
@@ -162,12 +165,23 @@ const QuickSort = ({ button }) => {
                   aria-label="Volume"
                   value={valueTime}
                   onChange={handleChangeTime}
+                  disabled={disable}
                 />
               </Stack>
             </Box>
           </SlideWrap>
-          <Button {...button} title="Sort" onClick={doSort} />
-          <Button {...button} title="Shuffle" onClick={handleReset} />
+          <Button
+            {...button}
+            title="Sort"
+            onClick={doSort}
+            disabled={disable}
+          />
+          <Button
+            {...button}
+            title="Shuffle"
+            onClick={handleReset}
+            disabled={disable}
+          />
         </div>
       </TopWrap>
       <Container>

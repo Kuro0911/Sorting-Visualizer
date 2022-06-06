@@ -24,6 +24,7 @@ const InsertSort = ({ button }) => {
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(10);
   const [valueTime, setValueTime] = useState(30);
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     const temp = [];
@@ -84,6 +85,7 @@ const InsertSort = ({ button }) => {
     }
     await sleep(valueTime * 10 + 300);
     setHeights(a);
+    setDisable(false);
     dispatch({
       type: actionTypes.SET_INSERT_DATA,
       insertData: {
@@ -91,9 +93,9 @@ const InsertSort = ({ button }) => {
         sorted: true,
       },
     });
-    console.log(heights);
   };
   const doSort = () => {
+    setDisable(true);
     InsertSort(heights);
   };
   const handleReset = () => {
@@ -133,6 +135,7 @@ const InsertSort = ({ button }) => {
                 valueLabelDisplay="on"
                 min={5}
                 max={100}
+                disabled={disable}
               />
             </Box>
           </SlideWrap>
@@ -149,12 +152,23 @@ const InsertSort = ({ button }) => {
                   aria-label="Volume"
                   value={valueTime}
                   onChange={handleChangeTime}
+                  disabled={disable}
                 />
               </Stack>
             </Box>
           </SlideWrap>
-          <Button {...button} title="Sort" onClick={doSort} />
-          <Button {...button} title="Shuffle" onClick={handleReset} />
+          <Button
+            {...button}
+            title="Sort"
+            onClick={doSort}
+            disabled={disable}
+          />
+          <Button
+            {...button}
+            title="Shuffle"
+            onClick={handleReset}
+            disabled={disable}
+          />
         </div>
       </TopWrap>
       <Container>
