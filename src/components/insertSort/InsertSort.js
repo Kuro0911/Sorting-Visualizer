@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ArrayBar from "../array-bar/array-bar";
+import ArrayBar from "../array-bar/Array-bar";
 import InsertSortWrapper from "./InsertSort.style";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
