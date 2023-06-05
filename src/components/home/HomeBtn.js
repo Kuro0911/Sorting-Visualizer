@@ -1,5 +1,5 @@
 import React from "react";
-import HomeIcon from "@mui/icons-material/Home";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import HomeBtnWrapper from "./HomeBtn.style";
 import Link from "next/link";
 export const HomeBtn = () => {
@@ -7,7 +7,7 @@ export const HomeBtn = () => {
     <HomeBtnWrapper>
       <Link href="/">
         <a>
-          <HomeIcon className="icon" />
+          <ArrowBackIosIcon className="icon" />
         </a>
       </Link>
     </HomeBtnWrapper>

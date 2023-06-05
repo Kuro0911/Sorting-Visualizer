@@ -13,9 +13,7 @@ export const SlideWrap = styled.div`
 export const TopWrap = styled.div`
   h1 {
     margin-left: 1em;
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-    color: #00adff;
+    color: white;
   }
   .container {
     display: flex;
@@ -23,10 +21,12 @@ export const TopWrap = styled.div`
   }
   .wrap {
     display: flex;
+    align-items: center;
   }
-  background-color: white;
+  background-color: #1a103c;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 2em;
 `;
 
 export const AboutWrapper = styled.div`

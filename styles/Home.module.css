@@ -1,5 +1,7 @@
 .container {
   padding: 0 2rem;
+  background-color: #1a103c;
+  color: white;
 }
 
 .main {
@@ -29,7 +31,7 @@
 }
 
 .title a {
-  color: #0070f3;
+  color: #e779c1;
   text-decoration: none;
 }
 
@@ -57,10 +59,10 @@
 }
 
 .code {
-  background: #fafafa;
+  color: #f3cc30;
   border-radius: 5px;
   padding: 0.75rem;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
@@ -83,23 +85,27 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
-  min-height: 270px;
+  height: 270px;
 }
 
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  border-color: #58c7f3;
 }
-
 .card h2 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
 }
+.card:hover,
+.card:focus,
+.card:active h2{
+  color: #f3cc30;
+}
 
 .card p {
   margin: 0;
+  color: white;
   font-size: 1.15rem;
   line-height: 1.5;
 }

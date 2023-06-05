@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 const HomeBtnWrapper = styled.div`
-  color: #00adff;
-  margin-left: 2em;
-  margin-top: 8%;
   .icon {
     cursor: pointer;
+    color: #e779c1;
     transform: scale(2);
+    margin-left: 2em;
   }
 `;
 

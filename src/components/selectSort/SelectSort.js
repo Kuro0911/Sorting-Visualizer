@@ -28,7 +28,7 @@ const SelectSort = ({ button }) => {
   useEffect(() => {
     const temp = [];
     for (var i = 0; i < 10; i++) {
-      const test = getRndInteger(1, 100);
+      const test = getRndInteger(1, 80);
       temp.push(test);
     }
     setHeights(temp);
@@ -125,7 +125,8 @@ const SelectSort = ({ button }) => {
           <HomeBtn />
           <h1>Selection Sort</h1>
         </div>
-        <div className="container">
+
+        {/* <div className="container">
           <SlideWrap>
             <Box sx={{ width: 300 }}>
               <Slider
@@ -138,6 +139,12 @@ const SelectSort = ({ button }) => {
                 valueLabelDisplay="on"
                 min={5}
                 max={100}
+                sx={{
+                  color: "#f3cc30",
+                  "& .MuiSlider-markLabel": {
+                    color: "white",
+                  },
+                }}
                 disabled={disable}
               />
             </Box>
@@ -156,6 +163,9 @@ const SelectSort = ({ button }) => {
                   value={valueTime}
                   onChange={handleChangeTime}
                   disabled={disable}
+                  sx={{
+                    color: "#f3cc30",
+                  }}
                 />
               </Stack>
             </Box>
@@ -165,14 +175,20 @@ const SelectSort = ({ button }) => {
             title="Sort"
             onClick={doSort}
             disabled={disable}
+            sx={{
+              color: "#f3cc30",
+            }}
           />
           <Button
             {...button}
             title="Shuffle"
             onClick={handleReset}
             disabled={disable}
+            sx={{
+              color: "#f3cc30",
+            }}
           />
-        </div>
+        </div> */}
       </TopWrap>
       <Container>
         {heights.map((value, key) => {
@@ -187,7 +203,7 @@ const SelectSort = ({ button }) => {
           );
         })}
       </Container>
-      <AboutWrapper>
+      {/* <AboutWrapper>
         <h1>About</h1>
         <div className={"textCont"}>
           <p>
@@ -219,7 +235,7 @@ const SelectSort = ({ button }) => {
           </p>
         </div>
       </AboutWrapper>
-      <TimeComp worst={"O(N^2)"} avg={"O(N^2)"} best={"O(N^2)"} />
+      <TimeComp worst={"O(N^2)"} avg={"O(N^2)"} best={"O(N^2)"} /> */}
     </SelectSortWrapper>
   );
 };
