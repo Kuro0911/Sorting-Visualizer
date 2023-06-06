@@ -1,6 +1,6 @@
 import { CopyBlock, dracula } from "react-code-blocks";
 
-export const MyCb = ({ code, language }) => {
+export const MyCb = ({ code, language, height }) => {
   return (
     <div
       style={{ fontFamily: "IBM Plex Mono", width: "30vw", marginRight: "2em" }}
@@ -8,7 +8,7 @@ export const MyCb = ({ code, language }) => {
       <CopyBlock
         text={code}
         customStyle={{
-          height: "60vh",
+          height: `${height}vh`,
           overflow: "scroll",
         }}
         language={language}

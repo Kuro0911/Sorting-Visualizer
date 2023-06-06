@@ -135,7 +135,6 @@ signed main(){
       await sleep(valueTime * 10);
     }
     setDisable(false);
-    console.log(heights);
   };
   const doSort = () => {
     setDisable(true);
@@ -160,7 +159,7 @@ signed main(){
   };
   return (
     <SelectSortWrapper>
-      <Navbar handleChange={handleChange} />
+      <Navbar handleChange={handleChange} title={"Selection Sort"} />
       <Container>
         <div className="up">
           <div className="left">
@@ -217,7 +216,7 @@ signed main(){
           About
         </h1>
         <div className="about-container">
-          <MyCb code={codeString} language="cpp" />
+          <MyCb code={codeString} language="cpp" height={"60"} />
           <div className="right">
             <div className="textCont">
               <p>
@@ -248,7 +247,7 @@ signed main(){
                 </ul>
               </p>
             </div>
-            <TimeComp worst={"O(N^2)"} avg={"O(N^2)"} best={"O(N^2)"} />
+            <TimeComp worst={"O(N^2)"} avg={"Ω(N^2)"} best={"Ω(N^2)"} />
           </div>
         </div>
       </AboutWrapper>

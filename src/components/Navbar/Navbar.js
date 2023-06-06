@@ -14,7 +14,7 @@ import Button from "../../data/Button";
 import { marks } from "../../data/Utilfunctions";
 import BarChartIcon from "@mui/icons-material/BarChart";
 
-export const Navbar = ({ handleChange }) => {
+export const Navbar = ({ handleChange, title }) => {
   const [length, setLength] = useState(10);
   const [valueTime, setValueTime] = useState(30);
   const [disable, setDisable] = useState(false);
@@ -40,7 +40,7 @@ export const Navbar = ({ handleChange }) => {
       <TopWrap>
         <div className="wrap">
           <HomeBtn />
-          <h1>Selection Sort</h1>
+          <h1>{title}</h1>
         </div>
 
         <div className="container">

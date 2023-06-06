@@ -1,278 +1,286 @@
 import React, { useEffect, useState } from "react";
 import ArrayBar from "../array-bar/Array-bar";
 import BubbleSortWrapper from "./BubbleSort.style";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import ShuffleIcon from "@mui/icons-material/Shuffle";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { useStateValue } from "../../contexts/StateProvider";
+import { actionTypes } from "../../contexts/reducer";
+import Tooltip from "@mui/material/Tooltip";
+
+import {
+  getArray,
+  getRndInteger,
+  marks,
+  sleep,
+} from "../../data/Utilfunctions";
 import {
   AboutWrapper,
   Container,
   SlideWrap,
   TopWrap,
 } from "../../../styles/global.style";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
-import { useStateValue } from "../../contexts/StateProvider";
-import { actionTypes } from "../../contexts/reducer";
-import { getRndInteger, marks, sleep } from "../../data/Utilfunctions";
-import Button from "../../data/Button";
 import PropTypes from "prop-types";
-import { Stack } from "@mui/material";
-import SpeedIcon from "@mui/icons-material/Speed";
+import { Navbar } from "../Navbar/Navbar";
+import { Button, IconButton } from "@mui/material";
 import TimeComp from "../time-comp/TimeComp";
-import { HomeBtn } from "../home/HomeBtn";
+import { MyCb, myCb } from "../CodeBlock/CodeBlock";
 
 const BubbleSort = ({ button }) => {
-  const [{ bubbleData }, dispatch] = useStateValue();
+  const [{ selectData }, dispatch] = useStateValue();
+  const [disable, setDisable] = useState(false);
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(10);
   const [valueTime, setValueTime] = useState(30);
-  const [disable, setDisable] = useState(false);
   useEffect(() => {
-    const temp = [];
-    for (var i = 0; i < 10; i++) {
-      const test = getRndInteger(1, 100);
-      temp.push(test);
-    }
-    setHeights(temp);
+    setHeights(getArray(length));
   }, []);
-  function valuetext(value) {
-    return `${value}`;
+  const codeString = `#include <bits/stdc++.h>
+using namespace std;
+
+void print(int a[], int n)
+{
+  for (int i = 0; i < n; i++)
+  {
+    cout << a[i] << " ";
   }
-  const handleChangeTime = (event, newValue) => {
-    setValueTime(newValue);
-  };
-  const handleChange = (event) => {
-    console.log(event.target.value);
-    const temp = [];
-    for (var i = 0; i < event.target.value; i++) {
-      const test = getRndInteger(1, 100);
-      temp.push(test);
-    }
-    dispatch({
-      type: actionTypes.SET_BUBBLE_DATA,
-      bubbleData: {
-        ...bubbleData,
-        active: 0,
-        compareA: 0,
-        compareB: 1,
-        sorted: false,
-      },
-    });
-    setLength(event.target.value);
-    setHeights(temp);
-  };
-  const Bubble = async (a, n) => {
-    for (var i = 0; i < n; i++) {
-      await sleep(valueTime * 10);
-      let flag = false;
-      for (var j = 0; j < n - 1; j++) {
-        await sleep(valueTime * 10 + 250);
-        dispatch({
-          type: actionTypes.SET_BUBBLE_DATA,
-          bubbleData: {
-            ...bubbleData,
-            active: j,
-          },
-        });
-        if (a[j] > a[j + 1]) {
-          // dispatch({
-          //   type: actionTypes.SET_BUBBLE_DATA,
-          //   bubbleData: {
-          //     ...bubbleData,
-          //     compareA: j,
-          //     compareB: j + 1,
-          //   },
-          // });
-          flag = true;
-          let temp = a[j];
-          a[j] = a[j + 1];
-          a[j + 1] = temp;
-        }
+  cout << endl;
+}
+// BubbleSort
+void BubbleSort(int a[], int n)
+{
+  for (int i = 0; i < n; i++)
+  {
+    bool flag = false;
+    for (int j = 0; j < n - 1; j++)
+    {
+      if (a[j] > a[j + 1])
+      {
+        flag = true;
+        int temp = a[j];
+        a[j] = a[j + 1];
+        a[j + 1] = temp;
       }
-      if (!flag) {
+    }
+    if (!flag)
+        break;
+  }
+  print(a, n);
+}
+signed main(){
+  int n;
+  cin >> n;
+  int a[n];
+  for (int i = 0; i < n; i++)
+  {
+    cin >> a[i];
+  }
+  BubbleSort(a, n);
+  print(a, n);
+  return 0;
+}
+  `;
+  const Bubble = async () => {
+    const bars = document.getElementsByClassName("array-bar");
+    for (var i = 0; i < heights.length; i++) {
+      let flag = false;
+      for (var j = 0; j < heights.length - 1; j++) {
+        bars[j].style.backgroundColor = "#58c7f3";
+        bars[j].style.boxShadow = "0 0 10px #58c7f3";
+
+        if (heights[j] > heights[j + 1]) {
+          flag = true;
+          bars[j].style.backgroundColor = "#f3cc30";
+          bars[j].style.boxShadow = "0 0 10px #f3cc30";
+
+          bars[j + 1].style.backgroundColor = "#f3cc30";
+          bars[j + 1].style.boxShadow = "0 0 10px #f3cc30";
+
+          await sleep(valueTime * 10);
+
+          let h = heights;
+          let temp = h[j];
+          bars[j].style.height = `${h[j + 1]}vh`;
+          h[j] = h[j + 1];
+          h[j + 1] = temp;
+          bars[j + 1].style.height = `${temp}vh`;
+          setHeights(h);
+
+          bars[j].style.backgroundColor = "#7fff00";
+          bars[j].style.boxShadow = "0 0 10px #7fff00";
+
+          bars[j + 1].style.backgroundColor = "#7fff00";
+          bars[j + 1].style.boxShadow = "0 0 10px #7fff00";
+        }
+
+        await sleep(valueTime * 10);
+        bars[j].style.backgroundColor = "white";
+        bars[j].style.boxShadow = "0 0 10px white";
+        bars[j + 1].style.backgroundColor = "white";
+        bars[j + 1].style.boxShadow = "0 0 10px white";
+      }
+      if (flag === false) {
         break;
       }
+      await sleep(valueTime * 10);
     }
-    dispatch({
-      type: actionTypes.SET_BUBBLE_DATA,
-      bubbleData: {
-        ...bubbleData,
-        active: heights.length + 1,
-        sorted: true,
-      },
-    });
+    for (var i = 0; i < heights.length; i++) {
+      bars[i].style.backgroundColor = "#7fff00";
+      bars[i].style.boxShadow = "0 0 10px #7fff00";
+      await sleep(valueTime * 10);
+    }
     setDisable(false);
-    setHeights(a);
   };
 
   const doSort = () => {
     setDisable(true);
-    Bubble(heights, heights.length);
+    Bubble();
     console.log(heights);
   };
   const handleReset = () => {
-    dispatch({
-      type: actionTypes.SET_BUBBLE_DATA,
-      bubbleData: {
-        ...bubbleData,
-        active: 0,
-        compareA: 0,
-        compareB: 1,
-        sorted: false,
-      },
-    });
-    const temp = [];
-    for (var i = 0; i < length; i++) {
-      const test = getRndInteger(1, 100);
-      temp.push(test);
+    const bars = document.getElementsByClassName("array-bar");
+    setDisable(false);
+    let temp = getArray(length);
+    for (var i = 0; i < temp.length; i++) {
+      bars[i].style.backgroundColor = "white";
+      bars[i].style.boxShadow = "0 0 10px white";
+      bars[i].style.height = `${temp[i]}vh`;
     }
     setHeights(temp);
   };
+  const handleChange = (l, t) => {
+    handleReset();
+    setValueTime(t);
+    setLength(l);
+    setHeights(getArray(l));
+  };
+
   return (
     <BubbleSortWrapper>
-      <TopWrap>
-        <div className="wrap">
-          <HomeBtn />
-          <h1>Bubble Sort</h1>
-        </div>
-        <div className="container">
-          <SlideWrap>
-            <Box sx={{ width: 300 }}>
-              <Slider
-                onChange={handleChange}
-                aria-label="Always visible"
-                defaultValue={10}
-                getAriaValueText={valuetext}
-                step={5}
-                marks={marks}
-                valueLabelDisplay="on"
-                min={5}
-                max={100}
-                disabled={disable}
-              />
-            </Box>
-          </SlideWrap>
-          <SlideWrap>
-            <Box sx={{ width: 200 }}>
-              <Stack
-                spacing={2}
-                direction="row"
-                sx={{ mb: 1 }}
-                alignItems="center"
-              >
-                <SpeedIcon />
-                <Slider
-                  aria-label="Volume"
-                  value={valueTime}
-                  onChange={handleChangeTime}
-                  disabled={disable}
-                />
-              </Stack>
-            </Box>
-          </SlideWrap>
-          <Button
-            {...button}
-            title="Sort"
-            onClick={doSort}
-            disabled={disable}
-          />
-          <Button
-            {...button}
-            title="Shuffle"
-            onClick={handleReset}
-            disabled={disable}
-          />
-        </div>
-      </TopWrap>
+      <Navbar handleChange={handleChange} title={"Bubble Sort"} />
       <Container>
-        {heights.map((value, key) => {
-          return (
-            <ArrayBar
-              height={value}
-              total={heights.length}
-              active={
-                key === bubbleData.active || key === bubbleData.active + 1
-                  ? true
-                  : false
-              }
-              sorted={bubbleData.sorted}
-            />
-          );
-        })}
+        <div className="up">
+          <div className="left">
+            <Tooltip title="sorted" arrow>
+              <div className="square green" />
+            </Tooltip>
+            <Tooltip title="swapping" arrow>
+              <div className="square yellow" />
+            </Tooltip>
+            <Tooltip title="current element" arrow>
+              <div className="square blue" />
+            </Tooltip>
+          </div>
+          <div className="right">
+            <IconButton
+              aria-label="pause"
+              className="icon"
+              sx={{
+                color: "#f3cc30",
+              }}
+            >
+              <RestartAltIcon />
+            </IconButton>
+            <IconButton
+              aria-label="sort"
+              onClick={doSort}
+              sx={{
+                color: "#f3cc30",
+              }}
+              className="icon"
+            >
+              <PlayArrowIcon />
+            </IconButton>
+            <IconButton
+              aria-label="shuffle"
+              onClick={handleReset}
+              className="icon"
+              sx={{
+                color: "#f3cc30",
+              }}
+            >
+              <ShuffleIcon />
+            </IconButton>
+          </div>
+        </div>
+        <div className="down">
+          {heights.map((value, key) => {
+            return <ArrayBar height={value} total={heights.length} />;
+          })}
+        </div>
       </Container>
       <AboutWrapper>
-        <h1>About</h1>
-        <div className={"textCont"}>
-          <p>
-            Bubble Sort is the simplest sorting algorithm that works by
-            repeatedly swapping the adjacent elements if they are in the wrong
-            order. This algorithm is not suitable for large data sets as its
-            average and worst case time complexity is quite high.
-          </p>
-          <h2>How Does it Work?</h2>
-          <p>
-            Consider an array arr[] = {(5, 1, 4, 2, 8)}
-            <ul>
-              <li>
-                First Pass: Bubble sort starts with very first two elements,
-                comparing them to check which one is greater.
+        <h1 style={{ color: "#e779c1", fontSize: "3rem", marginBottom: "1em" }}>
+          About
+        </h1>
+        <div className="about-container">
+          <MyCb code={codeString} language="cpp" height={"80"} />
+          <div className="right">
+            <div className="textCont">
+              <p>
+                Bubble Sort is the simplest sorting algorithm that works by
+                repeatedly swapping the adjacent elements if they are in the
+                wrong order. This algorithm is not suitable for large data sets
+                as its average and worst case time complexity is quite high.
+              </p>
+              <p>
+                <h2 className="head">How Does it Work?</h2>
+                Consider an array arr[] = 5, 1, 4, 2, 8
                 <ul>
                   <li>
-                    ( 5 1 4 2 8 ) -> ( 1 5 4 2 8 ), Here, algorithm compares the
-                    first two elements, and swaps since 5 > 1.
+                    First Pass: Bubble sort starts with very first two elements,
+                    comparing them to check which one is greater.
+                    <ul>
+                      <li>
+                        ( 5 1 4 2 8 ) -&gt; ( 1 5 4 2 8 ), Here, algorithm
+                        compares the first two elements, and swaps since 5 &gt;
+                        1.
+                      </li>
+                      <li>
+                        ( 1 5 4 2 8 ) -&gt; ( 1 4 5 2 8 ), Swap since 5 &gt; 4
+                      </li>
+                      <li>
+                        ( 1 4 5 2 8 ) -&gt; ( 1 4 2 5 8 ), Swap since 5 &gt; 2
+                      </li>
+                      <li>
+                        ( 1 4 2 5 8 ) -&gt; ( 1 4 2 5 8 ), Now, since these
+                        elements are already in order (8 &gt; 5), algorithm does
+                        not swap them.
+                      </li>
+                    </ul>
                   </li>
-                  <li>( 1 5 4 2 8 ) -> ( 1 4 5 2 8 ), Swap since 5 > 4</li>
-                  <li>( 1 4 5 2 8 ) -> ( 1 4 2 5 8 ), Swap since 5 > 2</li>
                   <li>
-                    ( 1 4 2 5 8 ) -> ( 1 4 2 5 8 ), Now, since these elements
-                    are already in order (8 > 5), algorithm does not swap them.
+                    Second Pass: Now, during second iteration it should look
+                    like this:
+                    <ul>
+                      <li>( 1 4 2 5 8 ) -&gt; ( 1 4 2 5 8 )</li>
+                      <li>
+                        ( 1 4 2 5 8 ) -&gt; ( 1 2 4 5 8 ), Swap since 4 &gt; 2
+                      </li>
+                      <li>( 1 2 4 5 8 ) -&gt; ( 1 2 4 5 8 ) </li>
+                      <li>( 1 2 4 5 8 ) -&gt; ( 1 2 4 5 8 )</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Third Pass: Now, the array is already sorted, but our
+                    algorithm does not know if it is completed. and it needs one
+                    whole pass without any swap to know it is sorted.
+                    <ul>
+                      <li>( 1 2 4 5 8 ) -&gt; ( 1 2 4 5 8 ) </li>
+                      <li>( 1 2 4 5 8 ) -&gt; ( 1 2 4 5 8 ) </li>
+                      <li>( 1 2 4 5 8 ) -&gt; ( 1 2 4 5 8 ) </li>
+                      <li>( 1 2 4 5 8 ) -&gt; ( 1 2 4 5 8 ) </li>
+                    </ul>
                   </li>
                 </ul>
-              </li>
-              <li>
-                Second Pass: Now, during second iteration it should look like
-                this:
-                <ul>
-                  <li>( 1 4 2 5 8 ) -> ( 1 4 2 5 8 )</li>
-                  <li>( 1 4 2 5 8 ) -> ( 1 2 4 5 8 ), Swap since 4 > 2</li>
-                  <li>( 1 2 4 5 8 ) -> ( 1 2 4 5 8 ) </li>
-                  <li>( 1 2 4 5 8 ) -> ( 1 2 4 5 8 )</li>
-                </ul>
-              </li>
-              <li>
-                Third Pass: Now, the array is already sorted, but our algorithm
-                does not know if it is completed. and it needs one whole pass
-                without any swap to know it is sorted.
-                <ul>
-                  <li>( 1 2 4 5 8 ) -> ( 1 2 4 5 8 ) </li>
-                  <li>( 1 2 4 5 8 ) -> ( 1 2 4 5 8 ) </li>
-                  <li>( 1 2 4 5 8 ) -> ( 1 2 4 5 8 ) </li>
-                  <li>( 1 2 4 5 8 ) -> ( 1 2 4 5 8 ) </li>
-                </ul>
-              </li>
-            </ul>
-          </p>
+              </p>
+            </div>
+            <TimeComp worst={"O(n^2)"} avg={"Ω(n^2)"} best={"Ω(n)"} />
+          </div>
         </div>
       </AboutWrapper>
-      <TimeComp worst={"Ω(n^2)"} avg={"Ω(n^2)"} best={"Ω(n)"} />
     </BubbleSortWrapper>
   );
-};
-BubbleSort.propTypes = {
-  button: PropTypes.object,
-};
-
-BubbleSort.defaultProps = {
-  button: {
-    type: "button",
-    fontSize: "13px",
-    fontWeight: "600",
-    color: "white",
-    borderRadius: "4px",
-    pl: "15px",
-    pr: "15px",
-    colors: "primaryWithBg",
-    minHeight: "auto",
-    height: `${1}`,
-  },
 };
 
 export default BubbleSort;

@@ -70,12 +70,10 @@ export default function Home() {
         </p>
         <div className={styles.grid}>
           {data.map((e) => (
-            <Link href={e.link}>
-              <a className={styles.card}>
-                <h2>{e.title} &rarr;</h2>
-                <p dangerouslySetInnerHTML={{ __html: e.desc }}></p>
-              </a>
-            </Link>
+            <a className={styles.card} href={e.link}>
+              <h2>{e.title} &rarr;</h2>
+              <p dangerouslySetInnerHTML={{ __html: e.desc }}></p>
+            </a>
           ))}
         </div>
       </main>

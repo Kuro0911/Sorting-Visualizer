@@ -56,6 +56,7 @@ export const Container = styled.div`
 export const AboutWrapper = styled.div`
   text-align: left;
   margin-top: 5vh;
+  margin-bottom: 10em;
   color: white;
   height: 85vh;
   display: flex;

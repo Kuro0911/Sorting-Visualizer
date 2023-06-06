@@ -6,9 +6,7 @@ export const HomeBtn = () => {
   return (
     <HomeBtnWrapper>
       <Link href="/">
-        <a>
-          <ArrowBackIosIcon className="icon" />
-        </a>
+        <ArrowBackIosIcon className="icon" />
       </Link>
     </HomeBtnWrapper>
   );
