@@ -8,13 +8,38 @@ export const Container = styled.div`
   .up {
     height: 13vh;
     display: flex;
-    flex-direction: coloumn;
-    align-items: center;
-    justify-content: center;
-    .icon {
-      transform: scale(2);
-      margin-left: 1.5em;
-      margin-right: 1.5em;
+    width: 85%;
+    .left {
+      width: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .square {
+        height: 4em;
+        width: 4em;
+        margin: 1em;
+      }
+      .green {
+        background-color: #7fff00;
+      }
+      .yellow {
+        background-color: #f3cc30;
+      }
+      .blue {
+        background-color: #58c7f3;
+      }
+    }
+    .right {
+      display: flex;
+      width: 60%;
+      flex-direction: coloumn;
+      align-items: center;
+      justify-content: flex-start;
+      .icon {
+        transform: scale(2);
+        margin-left: 1.5em;
+        margin-right: 1.5em;
+      }
     }
   }
   .down {

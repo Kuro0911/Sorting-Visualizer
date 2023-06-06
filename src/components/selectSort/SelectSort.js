@@ -6,6 +6,8 @@ import ShuffleIcon from "@mui/icons-material/Shuffle";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
+import Tooltip from "@mui/material/Tooltip";
+
 import {
   getArray,
   getRndInteger,
@@ -32,9 +34,6 @@ const SelectSort = () => {
   useEffect(() => {
     setHeights(getArray(length));
   }, []);
-  let active = 0,
-    currMin,
-    sorted = false;
   const codeString = `#include <bits/stdc++.h>
 using namespace std;
 
@@ -80,7 +79,7 @@ signed main(){
   `;
   const select = async () => {
     const bars = document.getElementsByClassName("array-bar");
-
+    let currMin;
     for (var i = 0; i < heights.length; i++) {
       currMin = i;
       bars[currMin].style.backgroundColor = "#58c7f3";
@@ -90,7 +89,7 @@ signed main(){
         bars[j].style.backgroundColor = "#ff8f00";
         bars[j].style.boxShadow = "0 0 10px #ff8f00";
 
-        if (heights[currMin] > heights[j]) {
+        if (heights[currMin] >= heights[j]) {
           bars[j].style.backgroundColor = "#58c7f3";
           bars[j].style.boxShadow = "0 0 10px #58c7f3";
 
@@ -136,6 +135,7 @@ signed main(){
       await sleep(valueTime * 10);
     }
     setDisable(false);
+    console.log(heights);
   };
   const doSort = () => {
     setDisable(true);
@@ -153,62 +153,62 @@ signed main(){
     setHeights(temp);
   };
   const handleChange = (l, t) => {
+    handleReset();
     setValueTime(t);
     setLength(l);
-    let temp = getArray(l);
-    for (var i = 0; i < temp.length; i++) {
-      bars[i].style.backgroundColor = "white";
-      bars[i].style.boxShadow = "0 0 10px white";
-      bars[i].style.height = `${temp[i]}vh`;
-    }
-    setHeights(temp);
+    setHeights(getArray(l));
   };
   return (
     <SelectSortWrapper>
       <Navbar handleChange={handleChange} />
       <Container>
         <div className="up">
-          <IconButton
-            aria-label="pause"
-            className="icon"
-            sx={{
-              color: "#f3cc30",
-            }}
-          >
-            <RestartAltIcon />
-          </IconButton>
-          <IconButton
-            aria-label="sort"
-            onClick={doSort}
-            sx={{
-              color: "#f3cc30",
-            }}
-            className="icon"
-          >
-            <PlayArrowIcon />
-          </IconButton>
-          <IconButton
-            aria-label="shuffle"
-            onClick={handleReset}
-            className="icon"
-            sx={{
-              color: "#f3cc30",
-            }}
-          >
-            <ShuffleIcon />
-          </IconButton>
+          <div className="left">
+            <Tooltip title="sorted" arrow>
+              <div className="square green" />
+            </Tooltip>
+            <Tooltip title="swapping" arrow>
+              <div className="square yellow" />
+            </Tooltip>
+            <Tooltip title="current minimum" arrow>
+              <div className="square blue" />
+            </Tooltip>
+          </div>
+          <div className="right">
+            <IconButton
+              aria-label="pause"
+              className="icon"
+              sx={{
+                color: "#f3cc30",
+              }}
+            >
+              <RestartAltIcon />
+            </IconButton>
+            <IconButton
+              aria-label="sort"
+              onClick={doSort}
+              sx={{
+                color: "#f3cc30",
+              }}
+              className="icon"
+            >
+              <PlayArrowIcon />
+            </IconButton>
+            <IconButton
+              aria-label="shuffle"
+              onClick={handleReset}
+              className="icon"
+              sx={{
+                color: "#f3cc30",
+              }}
+            >
+              <ShuffleIcon />
+            </IconButton>
+          </div>
         </div>
         <div className="down">
           {heights.map((value, key) => {
-            return (
-              <ArrayBar
-                height={value}
-                total={heights.length}
-                active={key === active ? true : false}
-                min={key === selectData.currMin ? true : false}
-                sorted={selectData.sorted}
-              />
-            );
+            return <ArrayBar height={value} total={heights.length} />;
           })}
         </div>
       </Container>
