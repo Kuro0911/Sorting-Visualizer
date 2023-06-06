@@ -24,10 +24,9 @@ import PropTypes from "prop-types";
 import { Navbar } from "../Navbar/Navbar";
 import { Button, IconButton } from "@mui/material";
 import TimeComp from "../time-comp/TimeComp";
-import { MyCb, myCb } from "../CodeBlock/CodeBlock";
+import { MyCb } from "../CodeBlock/CodeBlock";
 
-const BubbleSort = ({ button }) => {
-  const [{ selectData }, dispatch] = useStateValue();
+const BubbleSort = () => {
   const [disable, setDisable] = useState(false);
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(10);

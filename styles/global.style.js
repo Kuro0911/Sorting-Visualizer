@@ -28,6 +28,9 @@ export const Container = styled.div`
       .blue {
         background-color: #58c7f3;
       }
+      .orange {
+        background-color: #ff8f00;
+      }
     }
     .right {
       display: flex;
