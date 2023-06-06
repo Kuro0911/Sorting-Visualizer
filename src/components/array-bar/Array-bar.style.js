@@ -1,31 +1,42 @@
 import styled from "styled-components";
 
 const ArrayBarWrapper = styled.div`
-  h3 {
-    color: white;
-  }
   .array-bar {
     background-color: ${(props) =>
       props.mn || props.hl
         ? "red"
         : props.act
-        ? "blue"
+        ? "#ff8f00"
         : props.sort
         ? "green"
         : props.lrr
         ? "pink"
         : props.rrr || props.large
         ? "red"
-        : "white"};
+        : "#58c7f3"};
+    box-shadow: 0 0 10px
+      ${(props) =>
+        props.mn || props.hl
+          ? "red"
+          : props.act
+          ? "#ff8f00"
+          : props.sort
+          ? "green"
+          : props.lrr
+          ? "pink"
+          : props.rrr || props.large
+          ? "red"
+          : "white"};
     height: ${(props) => parseInt(props.h)}vh;
     width: ${(props) =>
       parseInt(props.tot) <= 20
         ? "20"
         : parseInt(props.tot) >= 45
-        ? "10"
+        ? "5"
         : "15"}px;
     display: inline-block;
-    margin: 0 1px;
+    border-radius: 1em;
+    margin: ${(props) => (parseInt(props.tot) >= 65 ? "0 4px" : "0 6px")};
   }
 `;
 export default ArrayBarWrapper;

@@ -14,6 +14,7 @@ export const ArrayBar = ({
   rarr,
   largest,
 }) => {
+  console.log(active);
   return (
     <div>
       <ArrayBarWrapper

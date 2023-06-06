@@ -1,20 +1,26 @@
 import React from "react";
-import { AboutWrapper } from "../../../styles/global.style";
+import TimeComplexityWrapper from "./TimeComp.style";
 
 const TimeComp = ({ worst, avg, best }) => {
   return (
-    <AboutWrapper>
-      <h1>Time Complexity</h1>
+    <TimeComplexityWrapper>
+      <h2 className="head">Time Complexity</h2>
       <div className={"textCont"}>
         <p>
           <ul>
-            <li>Worst Case Time Complexity is: {worst}</li>
-            <li>Average Case Time Complexity is: {avg}</li>
-            <li>Best Case Time Complexity is: {best}</li>
+            <li>
+              Worst Case Time Complexity is: <span>{worst}</span>
+            </li>
+            <li>
+              Average Case Time Complexity is: <span>{avg}</span>
+            </li>
+            <li>
+              Best Case Time Complexity is: <span>{best}</span>
+            </li>
           </ul>
         </p>
       </div>
-    </AboutWrapper>
+    </TimeComplexityWrapper>
   );
 };
 
