@@ -45,11 +45,11 @@ export default function Home() {
       desc: "<b>Depth-first search</b> is an algorithm for traversing or searching tree or graph starts at the root node and explores as far as possible along each branch before backtracking",
       link: "/depth-first",
     },
-    {
-      title: "A star algorithm",
-      desc: "",
-      link: "/heap-sort",
-    },
+    // {
+    //   title: "A star algorithm",
+    //   desc: "",
+    //   link: "/heap-sort",
+    // },
   ];
   return (
     <div className={styles.container}>

@@ -144,7 +144,7 @@ int main()
   };
   const doSearch = () => {
     setDisable(true);
-    bfs(st, ed, 8, 18);
+    bfs(st, ed, 9, 16);
     setDisable(false);
   };
   const handleReset = async () => {

@@ -8,8 +8,8 @@ const NodeWrapper = styled.div`
         : parseInt(props.idx) == parseInt(props.ed)
         ? "#7fff00"
         : "white"};
-    height: 5em;
-    width: 5em;
+    height: 7.25vh;
+    width: 4.5vw;
     border-radius: 1em;
     border: 1px solid black;
   }

@@ -31,8 +31,8 @@ export const DepthFirst = () => {
   const [graph, setGraph] = useState(Array(144).fill(0));
   const [disable, setDisable] = useState(false);
   const [valueTime, setValueTime] = useState(30);
-  const numRows = 8;
-  const numColumns = 18;
+  const numRows = 9;
+  const numColumns = 16;
 
   let st = 0,
     ed = 143;
