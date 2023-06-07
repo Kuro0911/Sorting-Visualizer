@@ -200,10 +200,10 @@ signed main(){
             <Tooltip title="sorted" arrow>
               <div className="square green" />
             </Tooltip>
-            <Tooltip title="swapping" arrow>
-              <div className="square yellow" />
+            <Tooltip title="left half" arrow>
+              <div className="square orange" />
             </Tooltip>
-            <Tooltip title="current minimum" arrow>
+            <Tooltip title="right half" arrow>
               <div className="square blue" />
             </Tooltip>
           </div>
