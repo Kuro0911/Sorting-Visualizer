@@ -138,7 +138,9 @@ int main()
     nodes[ed].style.backgroundColor = "#7fff00";
     setGraph(temp);
   };
-  const handleChange = (l, t) => {};
+  const handleChange = (l, t) => {
+    setValueTime(t);
+  };
   const addWall = (idx) => {
     if (disable === true) {
       return;
@@ -166,11 +168,14 @@ int main()
             <Tooltip title="target" arrow>
               <div className="square green" />
             </Tooltip>
-            <Tooltip title="swapping" arrow>
+            <Tooltip title="walls" arrow>
               <div className="square yellow" />
             </Tooltip>
-            <Tooltip title="start" arrow>
+            <Tooltip title="visited" arrow>
               <div className="square blue" />
+            </Tooltip>
+            <Tooltip title="start" arrow>
+              <div className="square orange" />
             </Tooltip>
           </div>
           <div className="right">
