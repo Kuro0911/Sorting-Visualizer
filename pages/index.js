@@ -36,18 +36,18 @@ export default function Home() {
     //   link: "/heap-sort",
     // },
     {
-      title: "Breath First Search",
-      desc: "<b>Heap sort</b> is a comparison-based sorting technique based on Binary Heap data structure",
-      link: "/heap-sort",
+      title: "BFS",
+      desc: "<b>Breadth-first search</b> used for searching tree or graph It explores all nodes at the present depth prior to moving on to the nodes at the next depth level",
+      link: "/breadth-first",
     },
     {
-      title: "Depth first Search",
-      desc: "<b>Heap sort</b> is a comparison-based sorting technique based on Binary Heap data structure",
-      link: "/heap-sort",
+      title: "DFS",
+      desc: "<b>Depth-first search</b> is an algorithm for traversing or searching tree or graph starts at the root node and explores as far as possible along each branch before backtracking",
+      link: "/depth-first",
     },
     {
       title: "A star algorithm",
-      desc: "<b>Heap sort</b> is a comparison-based sorting technique based on Binary Heap data structure",
+      desc: "",
       link: "/heap-sort",
     },
   ];

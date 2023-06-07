@@ -55,6 +55,23 @@ export const Container = styled.div`
     border: solid 1px #f3cc30;
     border-radius: 20px;
   }
+  .down-graph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    width: 85%;
+    border: solid 1px #f3cc30;
+    border-radius: 20px;
+    .down-graph-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 90%;
+      height: 90%;
+    }
+  }
 `;
 export const AboutWrapper = styled.div`
   text-align: left;
