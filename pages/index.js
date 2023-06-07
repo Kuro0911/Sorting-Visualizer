@@ -30,11 +30,11 @@ export default function Home() {
       desc: "<b>Merge Sort</b> divides the input array into two halves, calls itself for the two halves, and then it merges the two sorted halves.",
       link: "/merge-sort",
     },
-    {
-      title: "Heap Sort",
-      desc: "<b>Heap sort</b> is a comparison-based sorting technique based on Binary Heap data structure",
-      link: "/heap-sort",
-    },
+    // {
+    //   title: "Heap Sort",
+    //   desc: "<b>Heap sort</b> is a comparison-based sorting technique based on Binary Heap data structure",
+    //   link: "/heap-sort",
+    // },
     {
       title: "Breath First Search",
       desc: "<b>Heap sort</b> is a comparison-based sorting technique based on Binary Heap data structure",

@@ -1,269 +1,316 @@
 import React, { useEffect, useState } from "react";
-import ArrayBar from "../array-bar/Array-bar";
 import MergeSortWrapper from "./MergeSort.style";
+import ArrayBar from "../array-bar/Array-bar";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import ShuffleIcon from "@mui/icons-material/Shuffle";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { useStateValue } from "../../contexts/StateProvider";
+import { actionTypes } from "../../contexts/reducer";
+import Tooltip from "@mui/material/Tooltip";
+
+import {
+  getArray,
+  getRndInteger,
+  marks,
+  sleep,
+} from "../../data/Utilfunctions";
 import {
   AboutWrapper,
   Container,
   SlideWrap,
   TopWrap,
 } from "../../../styles/global.style";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
-import { useStateValue } from "../../contexts/StateProvider";
-import { actionTypes } from "../../contexts/reducer";
-import {
-  getRndInteger,
-  isSorted,
-  marks,
-  sleep,
-} from "../../data/Utilfunctions";
-import Button from "../../data/Button";
 import PropTypes from "prop-types";
-import { Stack } from "@mui/material";
-import SpeedIcon from "@mui/icons-material/Speed";
+import { Navbar } from "../Navbar/Navbar";
+import { Button, IconButton } from "@mui/material";
 import TimeComp from "../time-comp/TimeComp";
-import { HomeBtn } from "../home/HomeBtn";
+import { MyCb } from "../CodeBlock/CodeBlock";
 const MergeSort = ({ button }) => {
-  const [{ mergeData }, dispatch] = useStateValue();
+  const [disable, setDisable] = useState(false);
   const [heights, setHeights] = useState([]);
   const [length, setLength] = useState(10);
   const [valueTime, setValueTime] = useState(30);
-  const [disable, setDisable] = useState(false);
-
   useEffect(() => {
-    const temp = [];
-    for (var i = 0; i < 10; i++) {
-      const test = getRndInteger(1, 100);
-      temp.push(test);
-    }
-    setHeights(temp);
+    setHeights(getArray(length));
   }, []);
-  function valuetext(value) {
-    return `${value}`;
-  }
-  const handleChangeTime = (event, newValue) => {
-    setValueTime(newValue);
-  };
-  const handleChange = (event) => {
-    console.log(event.target.value);
-    const temp = [];
-    for (var i = 0; i < event.target.value; i++) {
-      const test = getRndInteger(1, 100);
-      temp.push(test);
+  const codeString = `#include <bits/stdc++.h>
+using namespace std;
+
+void print(int a[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        cout << a[i] << " ";
     }
-    setLength(event.target.value);
-    setHeights(temp);
-  };
-  const mergeSort = async (array) => {
-    if (array.length === 1) return array;
-    const mid = Math.floor(array.length / 2);
-    const firstH = await mergeSort(array.slice(0, mid)).then((res) => {
-      return res;
-    });
-    const secondH = await mergeSort(array.slice(mid)).then((res) => {
-      return res;
-    });
-    const sortedArr = [];
-    let i = 0,
-      j = 0;
-    while (i < firstH.length && j < secondH.length) {
-      if (firstH[i] < secondH[j]) {
-        sortedArr.push(firstH[i++]);
+    cout << endl;
+}
+void merge(int *a, int low, int mid, int high)
+{
+    int temp[101];
+    int i, k, j;
+    i = k = low;
+    j = mid + 1;
+    while (i <= mid && j <= high)
+    {
+        if (a[i] < a[j])
+        {
+            temp[k] = a[i];
+            k++;
+            i++;
+        }
+        else
+        {
+            temp[k] = a[j];
+            k++;
+            j++;
+        }
+    }
+    while (i <= mid)
+    {
+        temp[k] = a[i];
+        i++;
+        k++;
+    }
+    while (j <= high)
+    {
+        temp[k] = a[j];
+        j++;
+        k++;
+    } 
+    for (int x = low; x <= high; x++)
+    {
+        a[x] = temp[x];
+    }
+}
+void mergeSort(int *a, int low, int high)
+{
+    if (low < high)
+    {
+        int mid = (low + high) / 2;
+        mergeSort(a, low, mid);
+        mergeSort(a, mid + 1, high);
+        merge(a, low, mid, high);
+    }
+}
+signed main(){
+  int n;
+  cin >> n;
+  int a[n];
+  for (int i = 0; i < n; i++)
+  {
+      cin >> a[i];
+  }
+  mergeSort(a, 0, n - 1);
+  print(a, n);
+  return 0;
+}
+  `;
+
+  const merge = async (st, md, ed, h) => {
+    const bars = document.getElementsByClassName("array-bar");
+
+    for (var x = st; x <= md; x++) {
+      bars[x].style.backgroundColor = "#ff8f00";
+      bars[x].style.boxShadow = "0 0 10px #ff8f00";
+      await sleep(valueTime * 10);
+    }
+    for (var x = ed; x > md; x--) {
+      bars[x].style.backgroundColor = "#58c7f3";
+      bars[x].style.boxShadow = "0 0 10px #58c7f3";
+      await sleep(valueTime * 10);
+    }
+
+    let temp = new Array(100).fill(0);
+    let i, j, k;
+    i = k = st;
+    j = md + 1;
+    while (i <= md && j <= ed) {
+      if (h[i] < h[j]) {
+        temp[k] = h[i];
+        k++;
+        i++;
       } else {
-        sortedArr.push(secondH[j++]);
+        temp[k] = h[j];
+        k++;
+        j++;
       }
     }
-    dispatch({
-      type: actionTypes.SET_MERGE_DATA,
-      mergeData: {
-        ...mergeData,
-        larr: firstH,
-        rarr: secondH,
-      },
-    });
-    while (i < firstH.length) sortedArr.push(firstH[i++]);
-    while (j < secondH.length) sortedArr.push(secondH[j++]);
-    await sleep(valueTime * 40);
+    while (i <= md) {
+      temp[k] = h[i];
+      i++;
+      k++;
+    }
+    while (j <= ed) {
+      temp[k] = h[j];
+      j++;
+      k++;
+    }
 
-    return sortedArr;
+    for (var x = st; x <= ed; x++) {
+      h[x] = temp[x];
+      bars[x].style.backgroundColor = "#7fff00";
+      bars[x].style.boxShadow = "0 0 10px #7fff00";
+      bars[x].style.height = `${temp[x]}vh`;
+      await sleep(valueTime * 7);
+    }
   };
-  const doSort = () => {
+  const mergeSort = async (start, end, h) => {
+    const bars = document.getElementsByClassName("array-bar");
+    if (start >= end) {
+      return;
+    }
+    let md = Math.floor(start + (end - start) / 2);
+    await mergeSort(start, md, h);
+    await sleep(valueTime * 7);
+    await mergeSort(md + 1, end, h);
+    await sleep(valueTime * 7);
+    await merge(start, md, end, h);
+    setHeights(h);
+    await sleep(valueTime * 7);
+  };
+  const doSort = async () => {
     setDisable(true);
-    mergeSort(heights).then((res) => {
-      // console.log(isSorted(res));
-      setHeights(res);
-      setDisable(false);
-      dispatch({
-        type: actionTypes.SET_MERGE_DATA,
-        mergeData: {
-          ...mergeData,
-          sorted: true,
-        },
-      });
-    });
+    console.warn(heights);
+    let h = heights;
+    mergeSort(0, h.length - 1, h);
   };
   const handleReset = () => {
-    const temp = [];
-    for (var i = 0; i < length; i++) {
-      const test = getRndInteger(1, 100);
-      temp.push(test);
+    const bars = document.getElementsByClassName("array-bar");
+    setDisable(false);
+    let temp = getArray(length);
+    for (var i = 0; i < temp.length; i++) {
+      bars[i].style.backgroundColor = "white";
+      bars[i].style.boxShadow = "0 0 10px white";
+      bars[i].style.height = `${temp[i]}vh`;
     }
     setHeights(temp);
-    dispatch({
-      type: actionTypes.SET_MERGE_DATA,
-      mergeData: {
-        ...mergeData,
-        sorted: false,
-        larr: [0],
-        rarr: [0],
-      },
-    });
+  };
+  const handleChange = (l, t) => {
+    handleReset();
+    setValueTime(t);
+    setLength(l);
+    setHeights(getArray(l));
   };
   return (
     <MergeSortWrapper>
-      <TopWrap>
-        <div className="wrap">
-          <HomeBtn />
-          <h1>Merge Sort</h1>
-        </div>
-        <div className="container">
-          <SlideWrap>
-            <Box sx={{ width: 300 }}>
-              <Slider
-                onChange={handleChange}
-                aria-label="Always visible"
-                defaultValue={10}
-                getAriaValueText={valuetext}
-                step={5}
-                marks={marks}
-                valueLabelDisplay="on"
-                min={5}
-                max={100}
-                disabled={disable}
-              />
-            </Box>
-          </SlideWrap>
-          <SlideWrap>
-            <Box sx={{ width: 200 }}>
-              <Stack
-                spacing={2}
-                direction="row"
-                sx={{ mb: 1 }}
-                alignItems="center"
-              >
-                <SpeedIcon />
-                <Slider
-                  aria-label="Volume"
-                  value={valueTime}
-                  onChange={handleChangeTime}
-                  disabled={disable}
-                />
-              </Stack>
-            </Box>
-          </SlideWrap>
-          <Button
-            {...button}
-            title="Sort"
-            onClick={doSort}
-            disabled={disable}
-          />
-          <Button
-            {...button}
-            title="Shuffle"
-            onClick={handleReset}
-            disabled={disable}
-          />
-        </div>
-      </TopWrap>
+      <Navbar handleChange={handleChange} title={"Merge Sort"} />
       <Container>
-        {heights.map((value, key) => {
-          return (
-            <ArrayBar
-              height={value}
-              total={heights.length}
-              larr={mergeData.larr.includes(value) ? true : false}
-              rarr={mergeData.rarr.includes(value) ? true : false}
-              sorted={mergeData.sorted}
-            />
-          );
-        })}
+        <div className="up">
+          <div className="left">
+            <Tooltip title="sorted" arrow>
+              <div className="square green" />
+            </Tooltip>
+            <Tooltip title="swapping" arrow>
+              <div className="square yellow" />
+            </Tooltip>
+            <Tooltip title="current minimum" arrow>
+              <div className="square blue" />
+            </Tooltip>
+          </div>
+          <div className="right">
+            <IconButton
+              aria-label="pause"
+              className="icon"
+              sx={{
+                color: "#f3cc30",
+              }}
+            >
+              <RestartAltIcon />
+            </IconButton>
+            <IconButton
+              aria-label="sort"
+              onClick={doSort}
+              sx={{
+                color: "#f3cc30",
+              }}
+              className="icon"
+            >
+              <PlayArrowIcon />
+            </IconButton>
+            <IconButton
+              aria-label="shuffle"
+              onClick={handleReset}
+              className="icon"
+              sx={{
+                color: "#f3cc30",
+              }}
+            >
+              <ShuffleIcon />
+            </IconButton>
+          </div>
+        </div>
+        <div className="down">
+          {heights.map((value, key) => {
+            return <ArrayBar height={value} total={heights.length} />;
+          })}
+        </div>
       </Container>
       <AboutWrapper>
-        <h1>About</h1>
-        <div className={"textCont"}>
-          <p>
-            Like QuickSort, <b>Merge Sort</b> is a Divide and Conquer algorithm.
-            It divides the input array into two halves, calls itself for the two
-            halves, and then it merges the two sorted halves. The merge()
-            function is used for merging two halves. The merge(arr, l, m, r) is
-            a key process that assumes that arr[l..m] and arr[m+1..r] are sorted
-            and merges the two sorted sub-arrays into one.
-          </p>
-          <p>
-            <b>Pseudocode :</b>
-            <ul>
-              <li>Declare left variable to 0 and right variable to n-1</li>
-              <li>Find mid by medium formula. mid = (left+right)/2</li>
-              <li>Call merge sort on (left,mid)</li>
-              <li>Call merge sort on (mid+1,rear)</li>
-              <li>Continue till left is less than right</li>
-              <li>Then call merge function to perform merge sort.</li>
-            </ul>
-          </p>
-          <p>
-            <b>Algorithm :</b>
-            <ul>
-              <li>step 1: start</li>
-              <li>step 2: declare array and left, right, mid variable </li>
-              <li>
-                step 3: perform merge function.
-                <br />
-                mergesort(array,left,right)
-                <br />
-                mergesort (array, left, right)
-                <br />
-                if left > right
-                <br />
-                return
-                <br />
-                mid= (left+right)/2
-                <br />
-                mergesort(array, left, mid)
-                <br />
-                mergesort(array, mid+1, right)
-                <br />
-                merge(array, left, mid, right)
-              </li>
-              <li>step 4: Stop</li>
-            </ul>
-          </p>
+        <h1 style={{ color: "#e779c1", fontSize: "3rem", marginBottom: "1em" }}>
+          About
+        </h1>
+        <div className="about-container">
+          <MyCb code={codeString} language="cpp" height={"80"} />
+          <div className="right">
+            <div className="textCont">
+              <p>
+                Like QuickSort, <b>Merge Sort</b> is a Divide and Conquer
+                algorithm. It divides the input array into two halves, calls
+                itself for the two halves, and then it merges the two sorted
+                halves. The merge() function is used for merging two halves. The
+                merge(arr, l, m, r) is a key process that assumes that arr[l..m]
+                and arr[m+1..r] are sorted and merges the two sorted sub-arrays
+                into one.
+              </p>
+              <p>
+                <h2 className="head">Pseudocode</h2>
+                <ul>
+                  <li>Declare left variable to 0 and right variable to n-1</li>
+                  <li>Find mid by medium formula. mid = (left+right)/2</li>
+                  <li>Call merge sort on (left,mid)</li>
+                  <li>Call merge sort on (mid+1,rear)</li>
+                  <li>Continue till left is less than right</li>
+                  <li>Then call merge function to perform merge sort.</li>
+                </ul>
+              </p>
+              <p>
+                <h2 className="head">Algorithm</h2>
+                <ul>
+                  <li>step 1: start</li>
+                  <li>step 2: declare array and left, right, mid variable </li>
+                  <li>
+                    step 3: perform merge function.
+                    <br />
+                    mergesort(array,left,right)
+                    <br />
+                    mergesort (array, left, right)
+                    <br />
+                    if left &gt; right
+                    <br />
+                    return
+                    <br />
+                    mid= (left+right)/2
+                    <br />
+                    mergesort(array, left, mid)
+                    <br />
+                    mergesort(array, mid+1, right)
+                    <br />
+                    merge(array, left, mid, right)
+                  </li>
+                  <li>step 4: Stop</li>
+                </ul>
+              </p>
+            </div>
+            <TimeComp
+              worst={"Ω(n log(n))"}
+              avg={"θ(n log(n))"}
+              best={"Ω(n log(n))"}
+            />
+          </div>
         </div>
       </AboutWrapper>
-      <TimeComp
-        worst={"Ω(n log(n))"}
-        avg={"θ(n log(n))"}
-        best={"Ω(n log(n))"}
-      />
     </MergeSortWrapper>
   );
-};
-MergeSort.propTypes = {
-  button: PropTypes.object,
-};
-
-MergeSort.defaultProps = {
-  button: {
-    type: "button",
-    fontSize: "13px",
-    fontWeight: "600",
-    color: "white",
-    borderRadius: "4px",
-    pl: "15px",
-    pr: "15px",
-    colors: "primaryWithBg",
-    minHeight: "auto",
-    height: `${1}`,
-  },
 };
 
 export default MergeSort;
