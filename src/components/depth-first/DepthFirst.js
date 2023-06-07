@@ -29,7 +29,11 @@ import Node from "../node/Node";
 
 export const DepthFirst = () => {
   const [graph, setGraph] = useState(Array(144).fill(0));
+  const [disable, setDisable] = useState(false);
   const [valueTime, setValueTime] = useState(30);
+  const numRows = 8;
+  const numColumns = 18;
+
   let st = 0,
     ed = 143;
   const codeString = `#include <bits/stdc++.h>
@@ -69,26 +73,76 @@ int main()
     return 0;
 }
   `;
-  const dfs = async () => {};
+  const dfs = async (vis, curr) => {
+    console.log(curr);
+    const nodes = document.getElementsByClassName("node");
+    if (curr === ed) {
+      return true;
+    }
+    const row = Math.floor(curr / numColumns);
+    const col = curr % numColumns;
+    vis[curr] = true;
+    if (curr != 0) {
+      nodes[curr].style.backgroundColor = "#58c7f3";
+    }
+
+    await sleep(valueTime * 7);
+    const moves = [
+      [1, 0],
+      [0, 1],
+      [0, -1],
+      [-1, 0],
+    ];
+    for (const [dx, dy] of moves) {
+      const nextRow = row + dx;
+      const nextCol = col + dy;
+      const next = nextRow * numColumns + nextCol;
+      if (
+        nextRow >= 0 &&
+        nextRow < numRows &&
+        nextCol >= 0 &&
+        nextCol < numColumns &&
+        !vis[next] &&
+        graph[next] === 0
+      ) {
+        const foundPath = await dfs(vis, next);
+        if (foundPath === true) {
+          return true;
+        }
+      }
+    }
+    vis[curr] = false;
+    nodes[curr].style.backgroundColor = "white";
+    if (curr === 0) {
+      nodes[curr].style.backgroundColor = "red";
+    }
+    return false;
+  };
   const doSearch = () => {
     setDisable(true);
-    select();
+    let visited = new Array(graph.length).fill(false);
+    dfs(visited, 0);
+    setDisable(false);
   };
   const handleReset = async () => {
     let temp = Array(144).fill(0);
     const nodes = document.getElementsByClassName("node");
     for (let i = 0; i < temp.length; i++) {
       nodes[i].style.backgroundColor = "#e779c1";
-      await sleep(valueTime * 1);
+      await sleep(valueTime * 0.5);
     }
     for (let i = 0; i < temp.length; i++) {
       nodes[i].style.backgroundColor = "white";
     }
     nodes[st].style.backgroundColor = "#ff8f00";
     nodes[ed].style.backgroundColor = "#7fff00";
+    setGraph(temp);
   };
   const handleChange = (l, t) => {};
   const addWall = (idx) => {
+    if (disable === true) {
+      return;
+    }
     if (idx == st || idx == ed) {
       return;
     }
@@ -102,7 +156,6 @@ int main()
       temp[idx] = 0;
     }
     setGraph(temp);
-    console.log(idx);
   };
   return (
     <DepthFirstWrapper>
