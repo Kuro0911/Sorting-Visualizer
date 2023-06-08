@@ -25,7 +25,7 @@ import { Navbar } from "../Navbar/Navbar";
 import { Button, IconButton } from "@mui/material";
 import TimeComp from "../time-comp/TimeComp";
 import { MyCb } from "../CodeBlock/CodeBlock";
-import Node from "../node/Node";
+import Node from "../Node/Node";
 
 export const DepthFirst = () => {
   const [graph, setGraph] = useState(Array(144).fill(0));

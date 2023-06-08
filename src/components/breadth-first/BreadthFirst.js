@@ -6,7 +6,6 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
 import Tooltip from "@mui/material/Tooltip";
-
 import {
   getArray,
   getRndInteger,
@@ -24,7 +23,7 @@ import { Navbar } from "../Navbar/Navbar";
 import { Button, IconButton } from "@mui/material";
 import TimeComp from "../time-comp/TimeComp";
 import { MyCb } from "../CodeBlock/CodeBlock";
-import Node from "../node/Node";
+import Node from "../Node/Node";
 import BreadthFirstWrapper from "./BreadthFirst.style";
 
 export const BreadthFirst = () => {
