@@ -135,25 +135,30 @@ signed main(){
     setDisable(false);
   };
   const doSort = () => {
-    setDisable(true);
-    select();
+    if (disable === false) {
+      setDisable(true);
+      select();
+    }
   };
   const handleReset = () => {
-    const bars = document.getElementsByClassName("array-bar");
-    setDisable(false);
-    let temp = getArray(length);
-    for (var i = 0; i < temp.length; i++) {
-      bars[i].style.backgroundColor = "white";
-      bars[i].style.boxShadow = "0 0 10px white";
-      bars[i].style.height = `${temp[i]}vh`;
+    if (disable === false) {
+      const bars = document.getElementsByClassName("array-bar");
+      let temp = getArray(length);
+      for (var i = 0; i < temp.length; i++) {
+        bars[i].style.backgroundColor = "white";
+        bars[i].style.boxShadow = "0 0 10px white";
+        bars[i].style.height = `${temp[i]}vh`;
+      }
+      setHeights(temp);
     }
-    setHeights(temp);
   };
   const handleChange = (l, t) => {
-    handleReset();
-    setValueTime(t);
-    setLength(l);
-    setHeights(getArray(l));
+    if (disable === false) {
+      handleReset();
+      setValueTime(t);
+      setLength(l);
+      setHeights(getArray(l));
+    }
   };
   return (
     <SelectSortWrapper>

@@ -174,27 +174,33 @@ signed main(){
       bars[i].style.boxShadow = "0 0 10px #7fff00";
       await sleep(valueTime * 7);
     }
+    setDisable(false);
   };
   const doSort = () => {
-    setDisable(true);
-    quickSort(0, heights.length - 1);
+    if (disable === false) {
+      setDisable(true);
+      quickSort(0, heights.length - 1);
+    }
   };
   const handleReset = () => {
-    const bars = document.getElementsByClassName("array-bar");
-    setDisable(false);
-    let temp = getArray(length);
-    for (var i = 0; i < temp.length; i++) {
-      bars[i].style.backgroundColor = "white";
-      bars[i].style.boxShadow = "0 0 10px white";
-      bars[i].style.height = `${temp[i]}vh`;
+    if (disable === false) {
+      const bars = document.getElementsByClassName("array-bar");
+      let temp = getArray(length);
+      for (var i = 0; i < temp.length; i++) {
+        bars[i].style.backgroundColor = "white";
+        bars[i].style.boxShadow = "0 0 10px white";
+        bars[i].style.height = `${temp[i]}vh`;
+      }
+      setHeights(temp);
     }
-    setHeights(temp);
   };
   const handleChange = (l, t) => {
-    handleReset();
-    setValueTime(t);
-    setLength(l);
-    setHeights(getArray(l));
+    if (disable === false) {
+      handleReset();
+      setValueTime(t);
+      setLength(l);
+      setHeights(getArray(l));
+    }
   };
   return (
     <QuickSortWrapper>

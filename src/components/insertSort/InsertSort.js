@@ -75,7 +75,7 @@ signed main(){
 }
   `;
 
-  const InsertSort = async () => {
+  const insertSort = async () => {
     const bars = document.getElementsByClassName("array-bar");
     for (var i = 0; i < heights.length; i++) {
       let val = heights[i];
@@ -124,26 +124,31 @@ signed main(){
       await sleep(valueTime * 7);
     }
   };
-  const doSort = () => {
-    setDisable(true);
-    InsertSort();
+  const doSort = async () => {
+    if (disable === false) {
+      setDisable(true);
+      await insertSort().then(() => setDisable(false));
+    }
   };
   const handleReset = () => {
-    const bars = document.getElementsByClassName("array-bar");
-    setDisable(false);
-    let temp = getArray(length);
-    for (var i = 0; i < temp.length; i++) {
-      bars[i].style.backgroundColor = "white";
-      bars[i].style.boxShadow = "0 0 10px white";
-      bars[i].style.height = `${temp[i]}vh`;
+    if (disable === false) {
+      const bars = document.getElementsByClassName("array-bar");
+      let temp = getArray(length);
+      for (var i = 0; i < temp.length; i++) {
+        bars[i].style.backgroundColor = "white";
+        bars[i].style.boxShadow = "0 0 10px white";
+        bars[i].style.height = `${temp[i]}vh`;
+      }
+      setHeights(temp);
     }
-    setHeights(temp);
   };
   const handleChange = (l, t) => {
-    handleReset();
-    setValueTime(t);
-    setLength(l);
-    setHeights(getArray(l));
+    if (disable === false) {
+      handleReset();
+      setValueTime(t);
+      setLength(l);
+      setHeights(getArray(l));
+    }
   };
 
   return (

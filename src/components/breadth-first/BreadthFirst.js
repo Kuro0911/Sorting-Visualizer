@@ -99,6 +99,7 @@ int main()
     while (q.length > 0) {
       const curr = q.shift();
       if (curr === end) {
+        setDisable(false);
         let temp = constructPath(parent, start, end);
         for (let i = 0; i < temp.length - 1; i++) {
           nodes[temp[i]].style.backgroundColor = "#ff8f00";
@@ -139,29 +140,35 @@ int main()
         }
       }
     }
+    setDisable(false);
     return false;
   };
   const doSearch = () => {
-    setDisable(true);
-    bfs(st, ed, 9, 16);
-    setDisable(false);
+    if (disable === false) {
+      setDisable(true);
+      bfs(st, ed, 9, 16);
+    }
   };
   const handleReset = async () => {
-    let temp = Array(144).fill(0);
-    const nodes = document.getElementsByClassName("node");
-    for (let i = 0; i < temp.length; i++) {
-      nodes[i].style.backgroundColor = "#e779c1";
-      await sleep(valueTime * 0.5);
+    if (disable === false) {
+      let temp = Array(144).fill(0);
+      const nodes = document.getElementsByClassName("node");
+      for (let i = 0; i < temp.length; i++) {
+        nodes[i].style.backgroundColor = "#e779c1";
+        await sleep(valueTime * 0.5);
+      }
+      for (let i = 0; i < temp.length; i++) {
+        nodes[i].style.backgroundColor = "white";
+      }
+      nodes[st].style.backgroundColor = "#ff8f00";
+      nodes[ed].style.backgroundColor = "#7fff00";
+      setGraph(temp);
     }
-    for (let i = 0; i < temp.length; i++) {
-      nodes[i].style.backgroundColor = "white";
-    }
-    nodes[st].style.backgroundColor = "#ff8f00";
-    nodes[ed].style.backgroundColor = "#7fff00";
-    setGraph(temp);
   };
   const handleChange = (l, t) => {
-    setValueTime(t);
+    if (disable === false) {
+      setValueTime(t);
+    }
   };
   const addWall = (idx) => {
     if (disable === true) {

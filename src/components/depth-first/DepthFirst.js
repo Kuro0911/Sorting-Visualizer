@@ -77,6 +77,7 @@ int main()
     console.log(curr);
     const nodes = document.getElementsByClassName("node");
     if (curr === ed) {
+      setDisable(false);
       return true;
     }
     const row = Math.floor(curr / numColumns);
@@ -115,28 +116,32 @@ int main()
     nodes[curr].style.backgroundColor = "white";
     if (curr === 0) {
       nodes[curr].style.backgroundColor = "red";
+      setDisable(false);
     }
     return false;
   };
   const doSearch = () => {
-    setDisable(true);
-    let visited = new Array(graph.length).fill(false);
-    dfs(visited, 0);
-    setDisable(false);
+    if (disable === false) {
+      setDisable(true);
+      let visited = new Array(graph.length).fill(false);
+      dfs(visited, 0);
+    }
   };
   const handleReset = async () => {
-    let temp = Array(144).fill(0);
-    const nodes = document.getElementsByClassName("node");
-    for (let i = 0; i < temp.length; i++) {
-      nodes[i].style.backgroundColor = "#e779c1";
-      await sleep(valueTime * 0.5);
+    if (disable === false) {
+      let temp = Array(144).fill(0);
+      const nodes = document.getElementsByClassName("node");
+      for (let i = 0; i < temp.length; i++) {
+        nodes[i].style.backgroundColor = "#e779c1";
+        await sleep(valueTime * 0.5);
+      }
+      for (let i = 0; i < temp.length; i++) {
+        nodes[i].style.backgroundColor = "white";
+      }
+      nodes[st].style.backgroundColor = "#ff8f00";
+      nodes[ed].style.backgroundColor = "#7fff00";
+      setGraph(temp);
     }
-    for (let i = 0; i < temp.length; i++) {
-      nodes[i].style.backgroundColor = "white";
-    }
-    nodes[st].style.backgroundColor = "#ff8f00";
-    nodes[ed].style.backgroundColor = "#7fff00";
-    setGraph(temp);
   };
   const handleChange = (l, t) => {
     setValueTime(t);
