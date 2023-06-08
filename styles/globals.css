@@ -17,3 +17,15 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.myDiv {
+  font-family: "IBM Plex Mono";
+  width: 30vw;
+  margin-right: 2em;
+}
+
+@media screen and (max-width: 1400px) {
+  .myDiv {
+    width: 80vw;
+  }
+}

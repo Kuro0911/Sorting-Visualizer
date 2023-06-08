@@ -6,6 +6,9 @@ export const Container = styled.div`
   align-items: center;
   width: 100%;
   .up {
+    @media screen and (max-height: 600px) {
+      margin-top: 1em;
+    }
     height: 13vh;
     display: flex;
     width: 85%;
@@ -100,6 +103,15 @@ export const AboutWrapper = styled.div`
     width: 80%;
     .right {
       width: 50%;
+    }
+    @media screen and (max-width: 1400px) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      .right {
+        width: 90%;
+      }
     }
   }
 `;

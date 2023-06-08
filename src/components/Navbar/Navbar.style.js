@@ -20,6 +20,9 @@ export const TopWrap = styled.div`
       transform: scale(2);
       margin-right: 2em;
     }
+    @media screen and (max-width: 1300px) {
+      display: none;
+    }
   }
   .wrap {
     display: flex;
