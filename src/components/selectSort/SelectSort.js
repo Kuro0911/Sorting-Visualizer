@@ -20,7 +20,6 @@ import {
   SlideWrap,
   TopWrap,
 } from "../../../styles/global.style";
-import PropTypes from "prop-types";
 import { Navbar } from "../Navbar/Navbar";
 import { Button, IconButton } from "@mui/material";
 import TimeComp from "../time-comp/TimeComp";
@@ -32,7 +31,7 @@ const SelectSort = () => {
   const [valueTime, setValueTime] = useState(30);
   useEffect(() => {
     setHeights(getArray(length));
-  }, []);
+  }, [length]);
   const codeString = `#include <bits/stdc++.h>
 using namespace std;
 

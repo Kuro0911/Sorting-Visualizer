@@ -32,7 +32,7 @@ const MergeSort = ({ button }) => {
   const [valueTime, setValueTime] = useState(30);
   useEffect(() => {
     setHeights(getArray(length));
-  }, []);
+  }, [length]);
   const codeString = `#include <bits/stdc++.h>
 using namespace std;
 
