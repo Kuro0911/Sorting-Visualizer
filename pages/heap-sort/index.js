@@ -1,4 +1,4 @@
-import HeapSort from "../../src/components/heapSort/HeapSort";
+import { HeapSort } from "../../src/components/heapSort/HeapSort";
 
 const heapSort = () => {
   return <HeapSort />;

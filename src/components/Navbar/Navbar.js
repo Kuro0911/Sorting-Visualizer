@@ -10,7 +10,6 @@ import TuneIcon from "@mui/icons-material/Tune";
 import { Stack } from "@mui/material";
 import SpeedIcon from "@mui/icons-material/Speed";
 import TimeComp from "../time-comp/TimeComp";
-import Button from "../../data/Button";
 import { marks } from "../../data/Utilfunctions";
 import BarChartIcon from "@mui/icons-material/BarChart";
 
